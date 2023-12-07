@@ -13,7 +13,7 @@ namespace QuanLyThuVien
         public int PublicationYear;
         public int Price;
     }
-    internal class Main
+    internal class MainProgram
     {
         
         // Nhập thông tin cuốn sách
@@ -143,11 +143,6 @@ namespace QuanLyThuVien
             books[i + 1] = books[high];
             books[high] = temp2;
             return i + 1;
-        }
-        static void Main(string[] args)
-        {
-            
-                
         }
     }
 }
