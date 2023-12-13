@@ -267,6 +267,8 @@ namespace QuanLyThuVien
                 }
             }
         }
+
+        // đăng nhập
         static bool Login()
         {
             int attempts = 0;
@@ -325,6 +327,53 @@ namespace QuanLyThuVien
             return false;
         }
 
+
+        // đăng ký tài khoản
+        static void Register()
+        {
+
+            string newUsername = "";
+            string newPassword = "";
+            Console.WriteLine("Đăng ký tài khoản:");
+            while (string.IsNullOrWhiteSpace(newUsername))
+            {
+                Console.Write("Nhập tên tài khoản: ");
+                newUsername = Console.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(newUsername))
+                {
+                    Console.WriteLine("Tên tài khoản không được để trống. Vui lòng thử lại.");
+                }
+            }
+
+            while (string.IsNullOrWhiteSpace(newPassword))
+            {
+                Console.Write("Nhập mật khẩu: ");
+                newPassword = ReadPassword();
+
+                if (string.IsNullOrWhiteSpace(newPassword))
+                {
+                    Console.WriteLine("Mật khẩu không được để trống. Vui lòng thử lại.");
+                }
+            }
+            string hashedPassword = HashPassword(newPassword);
+            string newUserLine = $"{newUsername},{hashedPassword}\n";
+            string filePath = "Admin.txt";
+
+            try
+            {
+                File.AppendAllText(filePath, newUserLine);
+                Console.WriteLine("Tài khoản được tạo thành công!");
+                Console.ReadKey();
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine($"Error writing to credentials file: {ex.Message}");
+            }
+
+        }
+
+        // kiểm tra file txt tài khoản và mật khẩu
         static bool CheckCredentials(string username, string password)
         {
             string filePath = "Admin.txt";
@@ -390,6 +439,8 @@ namespace QuanLyThuVien
                 Console.WriteLine($"Error writing to credentials file: {ex.Message}");
             }
         }
+
+        // định dạng mật khẩu khi nhập thành ****
         static string ReadPassword()
         {
             string password = "";
@@ -558,49 +609,7 @@ namespace QuanLyThuVien
      
 
      
-        static void Register()
-        {
-
-            string newUsername = "";
-            string newPassword = "";
-            Console.WriteLine("Đăng ký tài khoản:");
-            while (string.IsNullOrWhiteSpace(newUsername))
-            {
-                Console.Write("Nhập tên tài khoản: ");
-                newUsername = Console.ReadLine();
-
-                if (string.IsNullOrWhiteSpace(newUsername))
-                {
-                    Console.WriteLine("Tên tài khoản không được để trống. Vui lòng thử lại.");
-                }
-            }
-
-            while (string.IsNullOrWhiteSpace(newPassword))
-            {
-                Console.Write("Nhập mật khẩu: ");
-                newPassword = ReadPassword();
-
-                if (string.IsNullOrWhiteSpace(newPassword))
-                {
-                    Console.WriteLine("Mật khẩu không được để trống. Vui lòng thử lại.");
-                }
-            }
-            string hashedPassword = HashPassword(newPassword);
-            string newUserLine = $"{newUsername},{hashedPassword}\n";
-            string filePath = "Admin.txt";
-
-            try
-            {
-                File.AppendAllText(filePath, newUserLine);
-                Console.WriteLine("Tài khoản được tạo thành công!");
-                Console.ReadKey();  
-            }
-            catch (IOException ex)
-            {
-                Console.WriteLine($"Error writing to credentials file: {ex.Message}");
-            }
-
-        }
+      
         static void LibraryMenu()
         {
 
