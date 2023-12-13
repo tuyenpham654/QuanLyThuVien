@@ -284,48 +284,9 @@ namespace QuanLyThuVien
         {
 
             Console.OutputEncoding = Encoding.UTF8;
-            string newUsername = "";
-            string newPassword = "";
-
-            while (string.IsNullOrWhiteSpace(newUsername))
-            {
-                Console.Write("Nhập tên tài khoản: ");
-                newUsername = Console.ReadLine();
-
-                if (string.IsNullOrWhiteSpace(newUsername))
-                {
-                    Console.WriteLine("Tên tài khoản không được để trống. Vui lòng thử lại.");
-                }
-            }
-
-            while (string.IsNullOrWhiteSpace(newPassword))
-            {
-                Console.Write("Nhập mật khẩu: ");
-                newPassword = ReadPassword();
-
-                if (string.IsNullOrWhiteSpace(newPassword))
-                {
-                    Console.WriteLine("Mật khẩu không được để trống. Vui lòng thử lại.");
-                }
-            }
-            string hashedPassword = HashPassword(newPassword);
-            string newUserLine = $"{newUsername},{hashedPassword}\n";
-            string filePath = "Admin.txt";
-
-            try
-            {
-                File.AppendAllText(filePath, newUserLine);
-                Console.WriteLine("Tài khoản được tạo thành công!");
-            }
-            catch (IOException ex)
-            {
-                Console.WriteLine($"Error writing to credentials file: {ex.Message}");
-            }
-
-            Console.OutputEncoding = Encoding.UTF8;
             int attempts = 0;
             int maxAttempts = 3;
-
+            Register();
             while (attempts < maxAttempts)
             {
                 Console.Write("                             +------------------------------------------------------+ \n");
@@ -336,7 +297,7 @@ namespace QuanLyThuVien
 
                 Console.Write("                             Mật khẩu: ");
                 string password = ReadPassword();
-                hashedPassword = HashPassword(password);
+                string hashedPassword = HashPassword(password);
               
                 if (CheckCredentials(username, hashedPassword))
                 {
@@ -352,9 +313,7 @@ namespace QuanLyThuVien
                         Console.WriteLine("3. Tim kiem va sua gia cuon sach theo tua");
                         Console.WriteLine("4. Tim kiem va xoa cuon sach theo ma");
                         Console.WriteLine("5. Sap xep danh sach cuon sach tang dan theo ma");
-                        Console.WriteLine("6. Sap xep danh sach cuon sach giam dan theo nam     xuat ban");
-
-
+                        Console.WriteLine("6. Sap xep danh sach cuon sach giam dan theo nam xuat ban");
                         Console.WriteLine("0. Thoat chuong trinh");
                         Console.Write("Nhap lua chon: ");
                         int choice;
@@ -453,6 +412,50 @@ namespace QuanLyThuVien
                 }
             }
             Environment.Exit(0);
+        }
+
+        static void Register()
+        {
+
+            string newUsername = "";
+            string newPassword = "";
+            Console.WriteLine("Đăng ký tài khoản:");
+            while (string.IsNullOrWhiteSpace(newUsername))
+            {
+                Console.Write("Nhập tên tài khoản: ");
+                newUsername = Console.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(newUsername))
+                {
+                    Console.WriteLine("Tên tài khoản không được để trống. Vui lòng thử lại.");
+                }
+            }
+
+            while (string.IsNullOrWhiteSpace(newPassword))
+            {
+                Console.Write("Nhập mật khẩu: ");
+                newPassword = ReadPassword();
+
+                if (string.IsNullOrWhiteSpace(newPassword))
+                {
+                    Console.WriteLine("Mật khẩu không được để trống. Vui lòng thử lại.");
+                }
+            }
+            string hashedPassword = HashPassword(newPassword);
+            string newUserLine = $"{newUsername},{hashedPassword}\n";
+            string filePath = "Admin.txt";
+
+            try
+            {
+                File.AppendAllText(filePath, newUserLine);
+                Console.WriteLine("Tài khoản được tạo thành công!");
+                Console.ReadKey();  
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine($"Error writing to credentials file: {ex.Message}");
+            }
+
         }
         static void LibraryMenu()
         {
