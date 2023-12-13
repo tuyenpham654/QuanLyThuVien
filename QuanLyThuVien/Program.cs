@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -270,10 +271,19 @@ namespace QuanLyThuVien
             books[high] = temp2;
             return i + 1;
         }
+
+        static string HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+            }
+        }
         static void Main(string[] args)
         {
 
-
+            Console.OutputEncoding = Encoding.UTF8;
             string newUsername = "";
             string newPassword = "";
 
@@ -298,8 +308,8 @@ namespace QuanLyThuVien
                     Console.WriteLine("Mật khẩu không được để trống. Vui lòng thử lại.");
                 }
             }
-            string newUserLine = $"{newUsername},{newPassword}\n";
-
+            string hashedPassword = HashPassword(newPassword);
+            string newUserLine = $"{newUsername},{hashedPassword}\n";
             string filePath = "Admin.txt";
 
             try
@@ -311,7 +321,7 @@ namespace QuanLyThuVien
             {
                 Console.WriteLine($"Error writing to credentials file: {ex.Message}");
             }
-            /**
+
             Console.OutputEncoding = Encoding.UTF8;
             int attempts = 0;
             int maxAttempts = 3;
@@ -326,8 +336,9 @@ namespace QuanLyThuVien
 
                 Console.Write("                             Mật khẩu: ");
                 string password = ReadPassword();
-
-                if (CheckCredentials(username, password))
+                hashedPassword = HashPassword(password);
+              
+                if (CheckCredentials(username, hashedPassword))
                 {
                     int maxBooks = 100; // Số lượng tối đa cuốn sách trong thư viện
                     Book[] books = new Book[maxBooks];
@@ -402,7 +413,7 @@ namespace QuanLyThuVien
                                 if (bookCount > 0)
                                 {
                                     SelectionSortByBookCode(books);
-                                    Console.WriteLine("Da sap xep danh sach cac cuon sach tang dan    theo ma sach.");
+                                    Console.WriteLine("Da sap xep danh sach cac cuon sach tang dan theo ma sach.");
 
                                     DisplayBooks(books);
 
@@ -416,7 +427,7 @@ namespace QuanLyThuVien
                                 if (bookCount > 0)
                                 {
                                     InsertionSortByPublicationYearDescending(books);
-                                    Console.WriteLine("Da sap xep danh sach cac cuon sach giam dan               theo nam xuat ban.");
+                                    Console.WriteLine("Da sap xep danh sach cac cuon sach giam dan theo nam xuat ban.");
 
                                     DisplayBooks(books);
 
@@ -441,7 +452,7 @@ namespace QuanLyThuVien
                     attempts++;
                 }
             }
-            Environment.Exit(0);**/
+            Environment.Exit(0);
         }
         static void LibraryMenu()
         {
