@@ -19,19 +19,21 @@ namespace QuanLyThuVien
     class Program
     {
 
+
         static void Main(string[] args)
         {
 
             Console.OutputEncoding = Encoding.UTF8;
-            // Register();
-
+            //Register();
+            //CreateUser();
+            FormMenu();
             if (Login() == true)
             {
                 FormMenu();
             }
             else
             {
-                
+                Console.Write("Nhập sai 3 lần chương trình kết thúc");
                 Console.ReadKey();
             }
 
@@ -166,8 +168,7 @@ namespace QuanLyThuVien
             int maxBooks = 100; // Số lượng tối đa cuốn sách trong thư viện
             Book[] books = new Book[maxBooks];
             int bookCount = 0;
-            bool isRunning = true;
-            while (isRunning)
+            while (true)
             {
                 Console.OutputEncoding = Encoding.UTF8;
                 Console.WriteLine("\n---- Quan ly cuon sach trong thu vien ----");
@@ -177,103 +178,95 @@ namespace QuanLyThuVien
                 Console.WriteLine("4. Tim kiem va xoa cuon sach theo ma");
                 Console.WriteLine("5. Sap xep danh sach cuon sach tang dan theo ma");
                 Console.WriteLine("6. Sap xep danh sach cuon sach giam dan theo nam xuat ban");
-                Console.WriteLine("Esc. Thoat chuong trinh");
+                Console.WriteLine("0. Thoat chuong trinh");
                 Console.Write("Nhap lua chon: ");
-            //    int choice;
-              //  int.TryParse(Console.ReadLine(), out choice);
-                ConsoleKeyInfo keyInfor = Console.ReadKey();
-                if (keyInfor.Key == ConsoleKey.Escape)
+                int choice;
+                int.TryParse(Console.ReadLine(), out choice);
+                switch (choice)
                 {
-                    isRunning = false;
-                }
-                else
-                {
-                    switch (keyInfor.Key)
-                    {
-                        case ConsoleKey.D1:
-                            if (bookCount < maxBooks)
-                            {
-                                books[bookCount] = InputBook();
-                                bookCount++;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Danh sach cuon sach da day. Khong the them  cuon sach moi.");
-                            }
-                            break;
-                        case ConsoleKey.D2:
-                            if (bookCount > 0)
-                            {
-                                DisplayBooks(books);
-                            }
-                            else
-                            {
-                                Console.WriteLine("Danh sach cuon sach rong.");
-                            }
-                            break;
-                        case ConsoleKey.D3:
-                            if (bookCount > 0)
-                            {
-                                Console.Write("Nhap tua sach can tim: ");
-                                string titleToFind = Console.ReadLine();
-                                Console.Write("Nhap gia moi cua cuon sach: ");
-                                int newPrice;
-                                int.TryParse(Console.ReadLine(), out newPrice);
-                                SearchAndUpdatePrice(books, titleToFind, newPrice);
-                            }
-                            else
-                            {
-                                Console.WriteLine("Danh sach cuon sach rong.");
-                            }
-                            break;
-                        case ConsoleKey.D4:
-                            if (bookCount > 0)
-                            {
-                                Console.Write("Nhap ma sach can tim: ");
-                                string bookCodeToFind = Console.ReadLine();
-                                SearchAndDeleteByCode(ref books, bookCodeToFind);
-                            }
-                            else
-                            {
-                                Console.WriteLine("Danh sach cuon sach rong.");
-                            }
-                            break;
-                        case ConsoleKey.D5:
-                            if (bookCount > 0)
-                            {
-                                SelectionSortByBookCode(books);
-                                Console.WriteLine("Da sap xep danh sach cac cuon sach tang dan theo ma sach.");
+                    case 1:
+                        if (bookCount < maxBooks)
+                        {
+                            books[bookCount] = InputBook();
+                            SaveBook(books[bookCount]);
+                            bookCount++;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Danh sach cuon sach da day. Khong the them  cuon sach moi.");
+                        }
+                        break;
+                    case 2:
+                        if (bookCount > 0)
+                        {
+                            DisplayBooks(books);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Danh sach cuon sach rong.");
+                        }
+                        break;
+                    case 3:
+                        if (bookCount > 0)
+                        {
+                            Console.Write("Nhap tua sach can tim: ");
+                            string titleToFind = Console.ReadLine();
+                            Console.Write("Nhap gia moi cua cuon sach: ");
+                            int newPrice;
+                            int.TryParse(Console.ReadLine(), out newPrice);
+                            SearchAndUpdatePrice(books, titleToFind, newPrice);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Danh sach cuon sach rong.");
+                        }
+                        break;
+                    case 4:
+                        if (bookCount > 0)
+                        {
+                            Console.Write("Nhap ma sach can tim: ");
+                            string bookCodeToFind = Console.ReadLine();
+                            SearchAndDeleteByCode(ref books, bookCodeToFind);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Danh sach cuon sach rong.");
+                        }
+                        break;
+                    case 5:
+                        if (bookCount > 0)
+                        {
+                            SelectionSortByBookCode(books);
+                            Console.WriteLine("Da sap xep danh sach cac cuon sach tang dan theo ma sach.");
 
-                                DisplayBooks(books);
+                            DisplayBooks(books);
 
-                            }
-                            else
-                            {
-                                Console.WriteLine("Danh sach cuon sach rong.");
-                            }
-                            break;
-                        case ConsoleKey.D6:
-                            if (bookCount > 0)
-                            {
-                                InsertionSortByPublicationYearDescending(books);
-                                Console.WriteLine("Da sap xep danh sach cac cuon sach giam dan theo nam xuat ban.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Danh sach cuon sach rong.");
+                        }
+                        break;
+                    case 6:
+                        if (bookCount > 0)
+                        {
+                            InsertionSortByPublicationYearDescending(books);
+                            Console.WriteLine("Da sap xep danh sach cac cuon sach giam dan theo nam xuat ban.");
 
-                                DisplayBooks(books);
+                            DisplayBooks(books);
 
-                            }
-                            else
-                            {
-                                Console.WriteLine("Danh sach cuon sach rong.");
-                            }
-                            break;
-                        case ConsoleKey.Escape:
-                            Console.WriteLine("Thoat chuong trinh.");
-                            isRunning = false;
-                            break;
-                        default:
-                            Console.WriteLine("Lua chon khong hop le.");
-                            break;
-                    }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Danh sach cuon sach rong.");
+                        }
+                        break;
+                    case 0:
+                        Console.WriteLine("Thoat chuong trinh.");
+                        return;
+                    default:
+                        Console.WriteLine("Lua chon khong hop le.");
+                        break;
                 }
             }
         }
@@ -333,7 +326,7 @@ namespace QuanLyThuVien
                   
                 }
             }
-            Console.Write("Nhập sai 3 lần chương trình kết thúc");
+
             return false;
         }
 
@@ -344,7 +337,7 @@ namespace QuanLyThuVien
 
             string newUsername = "";
             string newPassword = "";
-            Console.WriteLine("Đăng ký tài khoản:");
+            Console.WriteLine("Đăng ký tài khoản");
             while (string.IsNullOrWhiteSpace(newUsername))
             {
                 Console.Write("Nhập tên tài khoản: ");
@@ -491,8 +484,19 @@ namespace QuanLyThuVien
             Console.Write("Nhap gia sach (toi da 6 chu so): ");
             int.TryParse(Console.ReadLine(), out book.Price);
 
+            string filePath = "Books.txt";
             return book;
         }
+        static void SaveBook(Book book)
+        {
+            string filePath = "book_data.txt"; // Đường dẫn tới tệp lưu trữ dữ liệu sách
+            using (StreamWriter writer = new StreamWriter(filePath, true))
+            {
+                writer.WriteLine($"{book.BookCode},{book.Title},{book.Price},{book.PublicationYear}");
+            }
+            Console.WriteLine("Cuon sach da duoc luu.");
+        }
+        
         // Xuất thông tin cuốn sách
         public static void DisplayBook(Book book)
         {
@@ -508,8 +512,7 @@ namespace QuanLyThuVien
             }
         }
         // Tìm kiếm một cuốn sách theo tựa sách và sửa giá của cuốn sách đó
-        public static void SearchAndUpdatePrice(Book[] books, string titleToFind, int
-       newPrice)
+        public static void SearchAndUpdatePrice(Book[] books, string titleToFind, int newPrice)
         {
             bool found = false;
             for (int i = 0; i < books.Length; i++)
