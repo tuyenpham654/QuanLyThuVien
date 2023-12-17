@@ -44,7 +44,35 @@ namespace QuanLyThuVien
                 Console.WriteLine("Đăng nhập thất bại. Thoát khỏi hệ thống.");
             }
         }
+        static string Exit()
+        {
+            string pass = "";
+            ConsoleKeyInfo key;
 
+            do
+            {
+                key = Console.ReadKey(true);
+
+                // ConsoleKeyInfo keyInfor = Console.ReadKey();
+                if (key.Key == ConsoleKey.Escape)
+                {
+                    Environment.Exit(0);
+                }
+                if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+                {
+                    pass += key.KeyChar;
+                    Console.Write(pass);
+                }
+                else if (key.Key == ConsoleKey.Backspace && pass.Length > 0)
+                {
+                    pass = pass.Substring(0, pass.Length - 1);
+                    Console.Write("\b \b");
+                }
+            } while (key.Key != ConsoleKey.Enter);
+
+            Console.WriteLine();
+            return pass;
+        }
         static bool Login()
         {
             int attempt = 0;
@@ -60,7 +88,8 @@ namespace QuanLyThuVien
 
                 while (string.IsNullOrWhiteSpace(userName))
                 {
-                    userName = Console.ReadLine();
+                    userName = Exit();
+
                     if (string.IsNullOrWhiteSpace(userName))
                     {
                         Console.Write("                             Tên tài khoản không được để trống.\n" +
@@ -90,8 +119,13 @@ namespace QuanLyThuVien
                 else
                 {
                     attempt++;
-                    Console.WriteLine($"                             Đăng nhập thất bại. Bạn còn {3 - attempt} lần thử.");
-                    Console.ReadKey();
+                    Console.WriteLine($"                             Đăng nhập thất bại. Bạn còn {3 - attempt} lần thử. \nNhấn Esc để kết thúc chương trình");
+                    ConsoleKeyInfo keyInfor = Console.ReadKey();
+                    if (keyInfor.Key == ConsoleKey.Escape)
+                    {
+                        Environment.Exit(0);
+                    }
+                        //Console.ReadKey();
                     Console.Clear();
                 }
             }
@@ -109,6 +143,11 @@ namespace QuanLyThuVien
             {
                 key = Console.ReadKey(true);
 
+               // ConsoleKeyInfo keyInfor = Console.ReadKey();
+                if (key.Key == ConsoleKey.Escape)
+                {
+                    Environment.Exit(0);
+                }
                 if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
                 {
                     pass += key.KeyChar;
