@@ -52,13 +52,19 @@ namespace QuanLyThuVien
             attempt = atm;
             while (attempt < 3)
             {
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 string userName = "";
                 string pass = "";
-                Console.Write("                             +------------------------------------------------------+ \n");
-                Console.Write("                             |                   ĐĂNG NHẬP HỆ THỐNG                 | \n");
-                Console.Write("                             +------------------------------------------------------+ \n");
+                Console.Write("                             +******************************************************+ \n");
+                Console.Write("                             *                   ");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write("ĐĂNG NHẬP HỆ THỐNG                 ");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("* \n");
+                Console.Write("                             +******************************************************+ \n");
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("                             Tài khoản: ");
-
+                Console.ResetColor();
 
                 while (string.IsNullOrWhiteSpace(userName))
                 {
@@ -66,13 +72,15 @@ namespace QuanLyThuVien
 
                     if (string.IsNullOrWhiteSpace(userName))
                     {
+                        Console.ForegroundColor = ConsoleColor.Green;
                         Console.Write("                             Tên tài khoản không được để trống.\n" +
                             "                             Mời nhập lại: ");
 
                     }
                 }
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("                             Mật khẩu: ");
-
+                Console.ResetColor();
                 while (string.IsNullOrWhiteSpace(pass))
                 {
                     //    Console.Write("Nhập mật khẩu: ");
