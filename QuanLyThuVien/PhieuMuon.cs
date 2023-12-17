@@ -58,7 +58,7 @@ namespace QuanLyThuVien
                     DateTime ngayMuon = DateTime.Now;
                     DateTime ngayTra = ngayMuon.AddDays(7);
 
-                    string newBorrowing = $"{soPhieuMuon},{maBanDoc},{maSach},{ngayMuon.ToString("dd/MM/yyyy")},{ngayTra.ToString("dd/MM/yyyy")},1";
+                    string newBorrowing = $"{soPhieuMuon};{maBanDoc};{maSach};{ngayMuon.ToString("dd/MM/yyyy")};{ngayTra.ToString("dd/MM/yyyy")};1";
                     borrowings.Add(newBorrowing);
 
                     UpdateBookStatus(maSach, soPhieuMuon);
