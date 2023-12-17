@@ -58,6 +58,7 @@ namespace QuanLyThuVien
             int soTrang;
             DateTime ngayNhapKho;
             int tinhTrangSach;
+            bool kiemtra;
 
             Console.WriteLine("Nhập thông tin sách mới:");
 
@@ -85,8 +86,18 @@ namespace QuanLyThuVien
             Console.Write("giá bán: ");
             giaBan = int.Parse(Console.ReadLine());
 
+
             Console.Write("Năm Phát hành: ");
-            namPhatHanh = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", null);
+            kiemtra = DateTime.TryParseExact(Console.ReadLine(), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out namPhatHanh);
+            //   kiemtra = uint.TryParse(Console.ReadLine(), out uint maPhieu);
+            while (kiemtra == false)
+            {
+                Console.Write("      Định dạng không hợp lệ, mời nhập lại (dd/mm/yyyy): ");
+                kiemtra = DateTime.TryParseExact(Console.ReadLine(), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out namPhatHanh);
+            }
+
+            //Console.Write("Năm Phát hành: ");
+            //namPhatHanh = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", null).Date;
 
             Console.Write("Số trang: ");
             soTrang = int.Parse(Console.ReadLine());
@@ -103,7 +114,7 @@ namespace QuanLyThuVien
             // Ghi thông tin sách vào file Sach.txt
             using (StreamWriter sw = File.AppendText("Sach.txt"))
             {
-                sw.WriteLine($"{maSach};{tenSach};{tacgia};{nhaXuatBan};{giaBan};{namPhatHanh};{soTrang};{ngayNhapKho};{tinhTrangSach}");
+                sw.WriteLine($"{maSach};{tenSach};{tacgia};{nhaXuatBan};{giaBan};{namPhatHanh.ToString("dd-MM-yyyy")};{soTrang};{ngayNhapKho.ToString("dd-MM-yyyy")};{tinhTrangSach}");
                 Console.WriteLine("Sách đã được thêm vào thư viện.");
             }
         }
