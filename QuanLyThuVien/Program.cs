@@ -44,37 +44,10 @@ namespace QuanLyThuVien
                 Console.WriteLine("Đăng nhập thất bại. Thoát khỏi hệ thống.");
             }
         }
-        static string Exit()
-        {
-            string pass = "";
-            ConsoleKeyInfo key;
-
-            do
-            {
-                key = Console.ReadKey(true);
-
-                // ConsoleKeyInfo keyInfor = Console.ReadKey();
-                if (key.Key == ConsoleKey.Escape)
-                {
-                    Environment.Exit(0);
-                }
-                if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
-                {
-                    pass += key.KeyChar;
-                    Console.Write(pass);
-                }
-                else if (key.Key == ConsoleKey.Backspace && pass.Length > 0)
-                {
-                    pass = pass.Substring(0, pass.Length - 1);
-                    Console.Write("\b \b");
-                }
-            } while (key.Key != ConsoleKey.Enter);
-
-            Console.WriteLine();
-            return pass;
-        }
+      
         static bool Login()
         {
+            Console.WriteLine("Nhấn Esc để thoát chương trình");
             int attempt = 0;
             while (attempt < 3)
             {
@@ -88,7 +61,7 @@ namespace QuanLyThuVien
 
                 while (string.IsNullOrWhiteSpace(userName))
                 {
-                    userName = Exit();
+                    userName = ReadUser();
 
                     if (string.IsNullOrWhiteSpace(userName))
                     {
@@ -128,9 +101,55 @@ namespace QuanLyThuVien
                         //Console.ReadKey();
                     Console.Clear();
                 }
+
+
+
+                
             }
 
             return false;
+        }
+
+        // định dạng tài khoản: xóa dấu cách
+        static string ReadUser()
+        {
+            string userName = "";
+            ConsoleKeyInfo key;
+
+            do
+            {
+                key = Console.ReadKey(true);
+
+                // ConsoleKeyInfo keyInfor = Console.ReadKey();
+                if (key.Key == ConsoleKey.Escape)
+                {
+                    // Console.Clear();
+                    Console.Write("\n                             Nhấn Esc lần nữa để thoát. Nhấn phím bất kỳ để hủy");
+                    key = Console.ReadKey(true);
+                    if (key.Key == ConsoleKey.Escape)
+                    {
+                        Environment.Exit(0);
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Login();
+                    }
+                }
+                else if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+                {
+                    userName += key.KeyChar;
+                    Console.Write(key.KeyChar);
+                }
+                else if (key.Key == ConsoleKey.Backspace && userName.Length > 0)
+                {
+                    userName = userName.Substring(0, userName.Length - 1);
+                    Console.Write("\b \b");
+                }
+            } while (key.Key != ConsoleKey.Enter);
+
+            Console.WriteLine();
+            return userName;
         }
 
         // định dạng mật khẩu khi nhập thành ****
@@ -146,7 +165,18 @@ namespace QuanLyThuVien
                // ConsoleKeyInfo keyInfor = Console.ReadKey();
                 if (key.Key == ConsoleKey.Escape)
                 {
-                    Environment.Exit(0);
+                    // Console.Clear();
+                    Console.Write("\n                             Nhấn Esc lần nữa để thoát. Nhấn phím bất kỳ để hủy");
+                    key = Console.ReadKey(true);
+                    if (key.Key == ConsoleKey.Escape)
+                    {
+                        Environment.Exit(0);
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Login();
+                    }
                 }
                 if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
                 {
