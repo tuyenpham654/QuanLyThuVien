@@ -15,7 +15,7 @@ namespace QuanLyThuVien
         {
 
             Console.OutputEncoding = Encoding.UTF8;
-            if (Login())
+            if (Login(0))
             {
                 Console.Clear();
                 Console.WriteLine("Đăng nhập thành công!");
@@ -45,10 +45,11 @@ namespace QuanLyThuVien
             }
         }
       
-        static bool Login()
+        static bool Login(int atm)
         {
             Console.WriteLine("Nhấn Esc để thoát chương trình");
             int attempt = 0;
+            attempt = atm;
             while (attempt < 3)
             {
                 string userName = "";
@@ -61,7 +62,7 @@ namespace QuanLyThuVien
 
                 while (string.IsNullOrWhiteSpace(userName))
                 {
-                    userName = ReadUser();
+                    userName = ReadUser(attempt);
 
                     if (string.IsNullOrWhiteSpace(userName))
                     {
@@ -75,7 +76,7 @@ namespace QuanLyThuVien
                 while (string.IsNullOrWhiteSpace(pass))
                 {
                     //    Console.Write("Nhập mật khẩu: ");
-                    pass = ReadPassword();
+                    pass = ReadPassword(attempt);
 
 
                     if (string.IsNullOrWhiteSpace(pass))
@@ -110,8 +111,11 @@ namespace QuanLyThuVien
             return false;
         }
 
+        
+
         // định dạng tài khoản: xóa dấu cách
-        static string ReadUser()
+
+        static string ReadUser(int attempt)
         {
             string userName = "";
             ConsoleKeyInfo key;
@@ -120,11 +124,9 @@ namespace QuanLyThuVien
             {
                 key = Console.ReadKey(true);
 
-                // ConsoleKeyInfo keyInfor = Console.ReadKey();
                 if (key.Key == ConsoleKey.Escape)
                 {
-                    // Console.Clear();
-                    Console.Write("\n                             Nhấn Esc lần nữa để thoát. Nhấn phím bất kỳ để hủy");
+                    Console.Write($"\n                             Bạn còn {3 - attempt} lần thử. \nNhấn Esc để kết thúc chương trình. Nhấn phím bất kỳ để hủy");
                     key = Console.ReadKey(true);
                     if (key.Key == ConsoleKey.Escape)
                     {
@@ -133,7 +135,7 @@ namespace QuanLyThuVien
                     else
                     {
                         Console.Clear();
-                        Login();
+                        Login(attempt);
                     }
                 }
                 else if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
@@ -149,11 +151,13 @@ namespace QuanLyThuVien
             } while (key.Key != ConsoleKey.Enter);
 
             Console.WriteLine();
+
+            
             return userName;
         }
 
         // định dạng mật khẩu khi nhập thành ****
-        static string ReadPassword()
+        static string ReadPassword(int attempt)
         {
             string pass = "";
             ConsoleKeyInfo key;
@@ -166,7 +170,7 @@ namespace QuanLyThuVien
                 if (key.Key == ConsoleKey.Escape)
                 {
                     // Console.Clear();
-                    Console.Write("\n                             Nhấn Esc lần nữa để thoát. Nhấn phím bất kỳ để hủy");
+                    Console.Write($"\n                             Bạn còn {3-attempt} lần thử. \nNhấn Esc để kết thúc chương trình. Nhấn phím bất kỳ để hủy");
                     key = Console.ReadKey(true);
                     if (key.Key == ConsoleKey.Escape)
                     {
@@ -175,7 +179,7 @@ namespace QuanLyThuVien
                     else
                     {
                         Console.Clear();
-                        Login();
+                        Login(attempt);
                     }
                 }
                 if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
@@ -193,6 +197,11 @@ namespace QuanLyThuVien
             Console.WriteLine();
             return pass;
         }
+
+
+
+
+
 
         // băm mật khẩu
         static string HashPassword(string password)
@@ -223,31 +232,6 @@ namespace QuanLyThuVien
             return false;
         }
 
-        /* static bool CheckCredentials(string username, string password)
-         {
-             string filePath = "Admin.txt";
-
-             try
-             {
-                 string[] lines = File.ReadAllLines(filePath);
-
-                 foreach (string line in lines)
-                 {
-                     string[] parts = line.Split(',');
-
-                     if (parts.Length == 2 && parts[0] == username && parts[1] == password)
-                     {
-                         return true;
-                     }
-                 }
-             }
-             catch (IOException ex)
-             {
-                 Console.WriteLine($"Error reading credentials file: {ex.Message}");
-             }
-
-             return false;
-         }*/
 
         static void ShowMainMenu()
         {
