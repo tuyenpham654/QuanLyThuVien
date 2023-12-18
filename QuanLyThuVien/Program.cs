@@ -13,10 +13,13 @@ namespace QuanLyThuVien
     {
         static void Main(string[] args)
         {
-
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Black;
             Console.OutputEncoding = Encoding.UTF8;
             if (Login(0))
             {
+
                 Console.Clear();
                 Console.WriteLine("Đăng nhập thành công!");
                 // Hiển thị menu
@@ -24,7 +27,6 @@ namespace QuanLyThuVien
                 {
                     ShowMainMenu();
                     int choice = GetChoice(1, 3);
-
                     switch (choice)
                     {
                         case 1:
@@ -47,24 +49,25 @@ namespace QuanLyThuVien
       
         static bool Login(int atm)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Nhấn Esc để thoát chương trình");
             int attempt = 0;
             attempt = atm;
             while (attempt < 3)
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.ForegroundColor = ConsoleColor.Black;
                 string userName = "";
                 string pass = "";
-                Console.Write("                             +******************************************************+ \n");
-                Console.Write("                             *                   ");
-                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write("                             ******************************************************** \n");
+                Console.Write("                             |                   ");
+               // Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("ĐĂNG NHẬP HỆ THỐNG                 ");
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write("* \n");
-                Console.Write("                             +******************************************************+ \n");
-                Console.ForegroundColor = ConsoleColor.Green;
+                //Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("| \n");
+                Console.Write("                             ******************************************************** \n");
+                //Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("                             Tài khoản: ");
-                Console.ResetColor();
+                //Console.ResetColor();
 
                 while (string.IsNullOrWhiteSpace(userName))
                 {
@@ -72,13 +75,13 @@ namespace QuanLyThuVien
 
                     if (string.IsNullOrWhiteSpace(userName))
                     {
-                        Console.ForegroundColor = ConsoleColor.Green;
+                     //   Console.ForegroundColor = ConsoleColor.Green;
                         Console.Write("                             Tên tài khoản không được để trống.\n" +
                             "                             Mời nhập lại: ");
 
                     }
                 }
-                Console.ForegroundColor = ConsoleColor.Green;
+               // Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("                             Mật khẩu: ");
                 Console.ResetColor();
                 while (string.IsNullOrWhiteSpace(pass))
@@ -170,11 +173,13 @@ namespace QuanLyThuVien
             string pass = "";
             ConsoleKeyInfo key;
 
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
             do
             {
                 key = Console.ReadKey(true);
 
-               // ConsoleKeyInfo keyInfor = Console.ReadKey();
+               
                 if (key.Key == ConsoleKey.Escape)
                 {
                     // Console.Clear();
@@ -205,11 +210,6 @@ namespace QuanLyThuVien
             Console.WriteLine();
             return pass;
         }
-
-
-
-
-
 
         // băm mật khẩu
         static string HashPassword(string password)
@@ -243,10 +243,19 @@ namespace QuanLyThuVien
 
         static void ShowMainMenu()
         {
-            Console.WriteLine("Chọn chức năng:");
-            Console.WriteLine("1. Quản lý sách.");
-            Console.WriteLine("2. Quản lý phiếu mượn.");
-            Console.WriteLine("3. Thoát.");
+          
+            Console.WriteLine("                             +==================================+");
+            Console.WriteLine("                             |         QUẢN LÝ THƯ VIỆN         |");
+            Console.WriteLine("                             +==================================+");
+            Console.WriteLine("                             | 1. Quản lý sách.                 |");
+            Console.WriteLine("                             |__________________________________|");
+            Console.WriteLine("                             | 2. Quản lý phiếu mượn            |");
+            Console.WriteLine("                             |__________________________________|");
+            Console.WriteLine("                             | 3. Thoát                         |");
+            Console.WriteLine("                             +==================================+\n");
+
+
+            Console.Write("                             Chọn chức năng: ");
         }
 
         static int GetChoice(int min, int max)
@@ -254,7 +263,7 @@ namespace QuanLyThuVien
             int choice;
             while (!int.TryParse(Console.ReadLine(), out choice) || choice < min || choice > max)
             {
-                Console.WriteLine("Nhập lại lựa chọn từ {0} đến {1}.", min, max);
+                Console.WriteLine("                             Nhập lại lựa chọn từ {0} đến {1}.", min, max);
             }
             return choice;
         }
@@ -263,13 +272,25 @@ namespace QuanLyThuVien
         {
             while (true)
             {
+                
                 Book books = new Book();
-                Console.WriteLine("Chọn chức năng Quản lý sách:");
-                Console.WriteLine("1. Hiển thị thông tin sách.");
-                Console.WriteLine("2. Thêm sách.");
-                Console.WriteLine("3. Xóa sách.");
-                Console.WriteLine("4. Quay lại menu chính.");
+                Console.WriteLine("                             +=========================================+");
+                Console.WriteLine("                             |            QUẢN LÝ THƯ VIỆN             |");
+                Console.WriteLine("                             +=========================================+");
+                Console.WriteLine("                             | Quản lý sách.                           |");
+                Console.WriteLine("                             +=========================================+");
+                Console.WriteLine("                             |  -> 1. Hiển thị thông tin sách.         |");
+                Console.WriteLine("                             |_________________________________________|");
+                Console.WriteLine("                             |  -> 2. Thêm sách.                       |");
+                Console.WriteLine("                             |_________________________________________|");
+                Console.WriteLine("                             |  -> 3. Xóa sách.                        |");
+                Console.WriteLine("                             |_________________________________________|");
+                Console.WriteLine("                             |  -> 4. Quay lại menu chính.             |");
+                Console.WriteLine("                             |_________________________________________|");
+                Console.WriteLine("                             |  -> 5. Kết thúc chương trình            |");
+                Console.WriteLine("                             +=========================================+\n");
 
+                Console.Write("                             Chọn chức năng Quản lý sách:");
                 int choice = GetChoice(1, 4);
 
                 switch (choice)
@@ -285,6 +306,7 @@ namespace QuanLyThuVien
                         books.RemoveBook();
                         break;
                     case 4:
+                        Console.Clear();
                         return;
                 }
             }
@@ -296,11 +318,22 @@ namespace QuanLyThuVien
             while (true)
             {
                 PhieuMuon phieu = new PhieuMuon();
-                Console.WriteLine("Chọn chức năng Quản lý phiếu mượn:");
-                Console.WriteLine("1. Hiển thị thông tin phiếu mượn.");
-                Console.WriteLine("2. Mượn sách.");
-                Console.WriteLine("3. Trả sách.");
-                Console.WriteLine("4. Quay lại menu chính.");
+                Console.WriteLine("                             +=========================================+");
+                Console.WriteLine("                             |            QUẢN LÝ THƯ VIỆN             |");
+                Console.WriteLine("                             +=========================================+");
+                Console.WriteLine("                             | Quản lý phiếu mượn                      |");
+                Console.WriteLine("                             +=========================================+");
+                Console.WriteLine("                             |  -> 1. Hiển thị thông tin phiếu mượn    |");
+                Console.WriteLine("                             |_________________________________________|");
+                Console.WriteLine("                             |  -> 2. Mượn sách.                       |");
+                Console.WriteLine("                             |_________________________________________|");
+                Console.WriteLine("                             |  -> 3. Trả sách.                        |");
+                Console.WriteLine("                             |_________________________________________|");
+                Console.WriteLine("                             |  -> 4. Quay lại menu chính.             |");
+                Console.WriteLine("                             |_________________________________________|");
+                Console.WriteLine("                             |  -> 5. Kết thúc chương trình            |");
+                Console.WriteLine("                             +=========================================+\n");
+                Console.Write("                             Chọn chức năng Quản lý phiếu mượn:");
 
                 int choice = GetChoice(1, 4);
 

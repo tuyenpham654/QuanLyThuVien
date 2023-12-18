@@ -34,16 +34,33 @@ namespace QuanLyThuVien
 
         public void DisplayBookInformation()
         {
-            Console.WriteLine("Thông tin sách trong thư viện:");
+            Console.WriteLine("              Thông tin sách trong thư viện:");
 
             // Đọc thông tin sách từ file Sach.txt
             List<string> books = File.ReadAllLines("Sach.txt").ToList();
-
+            Console.WriteLine("              +===================================================================================================================================================================+");
+            Console.WriteLine("              | Mã Sách |          Tên Sách        |          Tác giả         |     Nhà xuất bản    |    Giá Bán     | Năm phát hành | Số trang | Ngày Nhập kho | Tình trạng sách |");
+        
             foreach (var book in books)
             {
                 string[] parts = book.Split(';');
-                Console.WriteLine($"Mã sách: {parts[0]}, Tên sách: {parts[1]}, Tác giả: {parts[2]}, Nhà xuất bản: {parts[3]}, Giá bán: {parts[4]}, Năm phát hành: {parts[5]}, Số trang: {parts[6]}, Ngày nhập kho: {parts[7]}, Tình trạng sách: {parts[8]}");
+                if( parts[8] == "0"){
+                    parts[8]= "chưa mượn";
+                    Console.WriteLine("               ___________________________________________________________________________________________________________________________________________________________________");
+                    Console.WriteLine($"              |    {parts[0],-5}| {parts[1],-25}| {parts[2],-25}| {parts[3],-20}| {parts[4],-15}| {parts[5],-14}|   {parts[6],-7}|  {parts[7],-13}|   {parts[8],-14}|");
+                }
+                else
+                {
+                    parts[8] = "đang mượn";
+                    Console.WriteLine("               ___________________________________________________________________________________________________________________________________________________________________");
+                    Console.WriteLine($"              |    {parts[0],-5}| {parts[1],-25}| {parts[2],-25}| {parts[3],-20}| {parts[4],-15}| {parts[5],-14}|   {parts[6],-7}|  {parts[7],-13}|   {parts[8],-14}|");
+
+                }
+
+            
+              //  Console.WriteLine($"Mã sách: {parts[0]}, Tên sách: {parts[1]}, Tác giả: {parts[2]}, Nhà xuất bản: {parts[3]}, Giá bán: {parts[4]}, Năm phát hành: {parts[5]}, Số trang: {parts[6]}, Ngày nhập kho: {parts[7]}, Tình trạng sách: {parts[8]}");
             }
+            Console.WriteLine("              +===================================================================================================================================================================+");
         }
 
         public void AddBook()
