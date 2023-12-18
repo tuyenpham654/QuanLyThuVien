@@ -270,6 +270,7 @@ namespace QuanLyThuVien
 
         static void ManageBooks()
         {
+            Console.Clear();
             while (true)
             {
                 
@@ -291,7 +292,7 @@ namespace QuanLyThuVien
                 Console.WriteLine("                             +=========================================+\n");
 
                 Console.Write("                             Chọn chức năng Quản lý sách:");
-                int choice = GetChoice(1, 4);
+                int choice = GetChoice(1, 5);
 
                 switch (choice)
                 {
@@ -308,6 +309,9 @@ namespace QuanLyThuVien
                     case 4:
                         Console.Clear();
                         return;
+                    case 5:
+                        Environment.Exit(0);
+                        break;
                 }
             }
         }
@@ -315,6 +319,7 @@ namespace QuanLyThuVien
 
         static void ManageBorrowing()
         {
+            Console.Clear();
             while (true)
             {
                 PhieuMuon phieu = new PhieuMuon();
@@ -335,7 +340,7 @@ namespace QuanLyThuVien
                 Console.WriteLine("                             +=========================================+\n");
                 Console.Write("                             Chọn chức năng Quản lý phiếu mượn:");
 
-                int choice = GetChoice(1, 4);
+                int choice = GetChoice(1, 5);
 
                 switch (choice)
                 {
@@ -349,7 +354,11 @@ namespace QuanLyThuVien
                         phieu.ReturnBook();
                         break;
                     case 4:
+                        Console.Clear();
                         return;
+                    case 5:
+                        Environment.Exit(0);
+                        break;
                 }
             }
         }

@@ -46,23 +46,52 @@ namespace QuanLyThuVien
                 string[] parts = book.Split(';');
                 if( parts[8] == "0"){
                     parts[8]= "chưa mượn";
-                    Console.WriteLine("               ___________________________________________________________________________________________________________________________________________________________________");
-                    Console.WriteLine($"              |    {parts[0],-5}| {parts[1],-25}| {parts[2],-25}| {parts[3],-20}| {parts[4],-15}| {parts[5],-14}|   {parts[6],-7}|  {parts[7],-13}|   {parts[8],-14}|");
-                }
+                    }
                 else
                 {
                     parts[8] = "đang mượn";
-                    Console.WriteLine("               ___________________________________________________________________________________________________________________________________________________________________");
-                    Console.WriteLine($"              |    {parts[0],-5}| {parts[1],-25}| {parts[2],-25}| {parts[3],-20}| {parts[4],-15}| {parts[5],-14}|   {parts[6],-7}|  {parts[7],-13}|   {parts[8],-14}|");
-
                 }
+                Console.WriteLine("               ___________________________________________________________________________________________________________________________________________________________________");
+                Console.WriteLine($"              |    {parts[0],-5}| {parts[1],-25}| {parts[2],-25}| {parts[3],-20}| {parts[4],-15}| {parts[5],-14}|   {parts[6],-7}|  {parts[7],-13}|   {parts[8],-14}|");
 
-            
-              //  Console.WriteLine($"Mã sách: {parts[0]}, Tên sách: {parts[1]}, Tác giả: {parts[2]}, Nhà xuất bản: {parts[3]}, Giá bán: {parts[4]}, Năm phát hành: {parts[5]}, Số trang: {parts[6]}, Ngày nhập kho: {parts[7]}, Tình trạng sách: {parts[8]}");
+
+
+                //  Console.WriteLine($"Mã sách: {parts[0]}, Tên sách: {parts[1]}, Tác giả: {parts[2]}, Nhà xuất bản: {parts[3]}, Giá bán: {parts[4]}, Năm phát hành: {parts[5]}, Số trang: {parts[6]}, Ngày nhập kho: {parts[7]}, Tình trạng sách: {parts[8]}");
             }
             Console.WriteLine("              +===================================================================================================================================================================+");
+
+            Console.Write("              Nhập mã để xem chi tiết: ");
+            int id=int.Parse(Console.ReadLine()); 
+            FindID(id);
         }
 
+        public void FindID(int ID)
+        {
+            List<string> books = File.ReadAllLines("Sach.txt").ToList();
+            foreach (var book in books)
+            {
+                string[] parts = book.Split(';');
+                int ma = int.Parse(parts[0].Trim());
+                if (ma == ID)
+                {
+                    if (parts[8] == "0")
+                    {
+                        parts[8] = "chưa mượn";
+                    }
+                    else
+                    {
+                        parts[8] = "đang mượn";
+                    }
+                    Console.WriteLine($"Mã sách: {parts[0]}\n Tên sách: {parts[1]}\n Tác giả: {parts[2]}\n Nhà xuất bản: {parts[3]}\n Giá bán: {parts[4]}\n Năm phát hành: {parts[5]}\n Số trang: {parts[6]}\n Ngày nhập kho: {parts[7]}\n Tình trạng sách: {parts[8]}");
+                    Console.ReadKey();
+                    Console.Clear();
+                }
+             
+                    
+
+            }
+ 
+        }
         public void AddBook()
         {
 
