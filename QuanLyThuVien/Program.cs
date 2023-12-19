@@ -18,6 +18,7 @@ namespace QuanLyThuVien
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Black;
             Console.OutputEncoding = Encoding.UTF8;
+           // Register();
             if (Login(0))
             {
 
@@ -120,7 +121,51 @@ namespace QuanLyThuVien
             return false;
         }
 
-        
+
+        // đăng ký
+        static void Register()
+        {
+
+            string newUsername = "";
+            string newPassword = "";
+            Console.WriteLine("Đăng ký tài khoản:");
+            while (string.IsNullOrWhiteSpace(newUsername))
+            {
+                Console.Write("Nhập tên tài khoản: ");
+                newUsername = Console.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(newUsername))
+                {
+                    Console.WriteLine("Tên tài khoản không được để trống. Vui lòng thử lại.");
+                }
+            }
+
+            while (string.IsNullOrWhiteSpace(newPassword))
+            {
+                Console.Write("Nhập mật khẩu: ");
+                newPassword = ReadPassword(0);
+
+                if (string.IsNullOrWhiteSpace(newPassword))
+                {
+                    Console.WriteLine("Mật khẩu không được để trống. Vui lòng thử lại.");
+                }
+            }
+            string hashedPassword = HashPassword(newPassword);
+            string newUserLine = $"{newUsername},{hashedPassword}\n";
+            string filePath = "Admin.txt";
+
+            try
+            {
+                File.AppendAllText(filePath, newUserLine);
+                Console.WriteLine("Tài khoản được tạo thành công!");
+                Console.ReadKey();
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine($"Error writing to credentials file: {ex.Message}");
+            }
+
+        }
 
         // định dạng tài khoản: xóa dấu cách
 
