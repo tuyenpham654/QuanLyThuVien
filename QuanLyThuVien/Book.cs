@@ -58,12 +58,13 @@ namespace QuanLyThuVien
                 //  Console.WriteLine($"Mã sách: {parts[0]}, Tên sách: {parts[1]}, Tác giả: {parts[2]}, Nhà xuất bản: {parts[3]}, Giá bán: {parts[4]}, Năm phát hành: {parts[5]}, Số trang: {parts[6]}, Ngày nhập kho: {parts[7]}, Tình trạng sách: {parts[8]}");
             }
             Console.WriteLine("              +===================================================================================================================================================================+\n");
-            Console.Write("              Nhấn T để xem chi tiết. nhấn phím bất kỳ để quay lại");
+            Console.Write("              Nhấn T để xem chi tiết. nhấn phím bất kỳ để quay lại\n");
             ConsoleKeyInfo key = Console.ReadKey();
             if (key.Key == ConsoleKey.T)
             {
                 SearchBookByCode();
             }
+            Console.Clear();
             return;
             
         }
@@ -162,6 +163,8 @@ namespace QuanLyThuVien
             if (IsBookExist(maSach))
             {
                 Console.WriteLine("              Sách đã tồn tại trong thư viện.");
+                Console.ReadKey();
+                Console.Clear();
                 return;
             }
 
@@ -207,12 +210,14 @@ namespace QuanLyThuVien
             {
                 sw.WriteLine(newBook);
                 Console.WriteLine("              Sách đã được thêm vào thư viện.");
+                Console.ReadKey();
+                Console.Clear();
             }
         }
 
         public void RemoveBook()
         {
-            Console.WriteLine("              Nhập mã sách để xóa:");
+            Console.Write("              Nhập mã sách để xóa: ");
 
             string maSachToRemove = Console.ReadLine();
 
@@ -227,6 +232,8 @@ namespace QuanLyThuVien
                 {
                     books.RemoveAt(i);
                     Console.WriteLine("              Sách đã được xóa khỏi thư viện.");
+                    Console.ReadKey();
+                    Console.Clear ();
                     break;
                 }
                 else if (parts[0].Equals(maSachToRemove) && !parts[8].Equals("0"))
