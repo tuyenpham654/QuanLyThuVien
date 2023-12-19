@@ -34,9 +34,17 @@ namespace QuanLyThuVien
 
             foreach (var borrowing in borrowings)
             {
+                string tinhTrang="";
                 string[] parts = borrowing.Split(';');
-                Console.WriteLine("               ---------------------------------------------------------------------------------------------------------");
-                Console.WriteLine($"              | {parts[0],-14}| {parts[1],-11} | {parts[2],-11}| {parts[3],-16}| {parts[4],-20} | {parts[5],-21}|");
+                if (parts[5] == "0")
+                {
+                    tinhTrang = "đã trả";
+                }else if (parts[5] == "1")
+                {
+                    tinhTrang = "đang mượn";
+                }
+                    Console.WriteLine("               ---------------------------------------------------------------------------------------------------------");
+                Console.WriteLine($"              | {parts[0],-14}| {parts[1],-11} | {parts[2],-11}| {parts[3],-16}| {parts[4],-20} | {tinhTrang,-21}|");
             }
             Console.WriteLine("              +==========================================================================================================+");
         }
@@ -62,7 +70,7 @@ namespace QuanLyThuVien
                     DateTime ngayMuon = DateTime.Now;
                     DateTime ngayTra = ngayMuon.AddDays(7);
 
-                    string newBorrowing = $"{soPhieuMuon};{maBanDoc};{maSach};{ngayMuon.ToString("dd/MM/yyyy")};{ngayTra.ToString("dd/MM/yyyy")}";
+                    string newBorrowing = $"{soPhieuMuon};{maBanDoc};{maSach};{ngayMuon.ToString("dd/MM/yyyy")};{ngayTra.ToString("dd/MM/yyyy")};1";
                     borrowings.Add(newBorrowing);
 
                     UpdateBookStatus(maSach, soPhieuMuon);
@@ -158,7 +166,7 @@ namespace QuanLyThuVien
 
                 if (parts[0].Equals(maSach))
                 {
-                    parts[8] = soPhieuMuon.ToString();
+                    parts[8] = "1";
                     books[i] = string.Join(";", parts);
                     break;
                 }
