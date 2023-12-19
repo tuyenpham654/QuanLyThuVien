@@ -29,12 +29,16 @@ namespace QuanLyThuVien
             Console.WriteLine("Thông tin phiếu mượn:");
 
             List<string> borrowings = File.ReadAllLines("PhieuMuon.txt").ToList();
+            Console.WriteLine("              +==========================================================================================================+");
+            Console.WriteLine("              | Số phiếu mượn | Mã bạn đọc  |   Mã sách  |    Ngày mượn    |    Ngày phải trả     |Tình trạng phiếu mượn |");
 
             foreach (var borrowing in borrowings)
             {
                 string[] parts = borrowing.Split(';');
-                Console.WriteLine($"Số phiếu mượn: {parts[0]}, Mã bạn đọc: {parts[1]}, Mã sách: {parts[2]}, Ngày mượn: {parts[3]}, Ngày phải trả: {parts[4]}, Tình trạng phiếu mượn: {parts[5]}");
+                Console.WriteLine("               ---------------------------------------------------------------------------------------------------------");
+                Console.WriteLine($"              | {parts[0],-14}| {parts[1],-11} | {parts[2],-11}| {parts[3],-16}| {parts[4],-20} | {parts[5],-21}|");
             }
+            Console.WriteLine("              +==========================================================================================================+");
         }
 
         public void BorrowBook()

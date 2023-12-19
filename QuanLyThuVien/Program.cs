@@ -13,6 +13,7 @@ namespace QuanLyThuVien
     {
         static void Main(string[] args)
         {
+            
             Console.BackgroundColor = ConsoleColor.White;
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Black;
@@ -60,14 +61,11 @@ namespace QuanLyThuVien
                 string pass = "";
                 Console.Write("                             ******************************************************** \n");
                 Console.Write("                             |                   ");
-               // Console.ForegroundColor = ConsoleColor.White;
                 Console.Write("ĐĂNG NHẬP HỆ THỐNG                 ");
-                //Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write("| \n");
                 Console.Write("                             ******************************************************** \n");
-                //Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write("                             Tài khoản: ");
-                //Console.ResetColor();
+                
 
                 while (string.IsNullOrWhiteSpace(userName))
                 {
