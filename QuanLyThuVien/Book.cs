@@ -9,8 +9,7 @@ namespace QuanLyThuVien
 {
     struct Book
     {
-        //static List<Book> books = new List<Book>();
-
+        static List<Book> books = new List<Book>();
         private int maSach;
         private string tenSach;
         private string tacgia;
@@ -58,40 +57,86 @@ namespace QuanLyThuVien
 
                 //  Console.WriteLine($"Mã sách: {parts[0]}, Tên sách: {parts[1]}, Tác giả: {parts[2]}, Nhà xuất bản: {parts[3]}, Giá bán: {parts[4]}, Năm phát hành: {parts[5]}, Số trang: {parts[6]}, Ngày nhập kho: {parts[7]}, Tình trạng sách: {parts[8]}");
             }
-            Console.WriteLine("              +===================================================================================================================================================================+");
-
-            Console.Write("              Nhập mã để xem chi tiết: ");
-            int id=int.Parse(Console.ReadLine()); 
-            FindID(id);
-        }
-
-        public void FindID(int ID)
-        {
-            List<string> books = File.ReadAllLines("Sach.txt").ToList();
-            foreach (var book in books)
+            Console.WriteLine("              +===================================================================================================================================================================+\n");
+            Console.Write("              Nhấn T để xem chi tiết. nhấn phím bất kỳ để quay lại");
+            ConsoleKeyInfo key = Console.ReadKey();
+            if (key.Key == ConsoleKey.T)
             {
-                string[] parts = book.Split(';');
-                int ma = int.Parse(parts[0].Trim());
-                if (ma == ID)
-                {
-                    if (parts[8] == "0")
-                    {
-                        parts[8] = "chưa mượn";
-                    }
-                    else
-                    {
-                        parts[8] = "đang mượn";
-                    }
-                    Console.WriteLine($"Mã sách: {parts[0]}\n Tên sách: {parts[1]}\n Tác giả: {parts[2]}\n Nhà xuất bản: {parts[3]}\n Giá bán: {parts[4]}\n Năm phát hành: {parts[5]}\n Số trang: {parts[6]}\n Ngày nhập kho: {parts[7]}\n Tình trạng sách: {parts[8]}");
-                    Console.ReadKey();
-                    Console.Clear();
-                }
-             
-                    
-
+                SearchBookByCode();
             }
- 
+            return;
+            
         }
+        static void SearchBookByCode()
+        {
+            while (true)
+            {
+                Console.Write("\b \b");
+                Console.Write("\n              Nhập mã sách cần tìm: ");
+                string maSachToSearch = Console.ReadLine();
+                bool find = false;
+
+                List<string> books = File.ReadAllLines("Sach.txt").ToList();
+
+                foreach (var book in books)
+                {
+                    string[] parts = book.Split(';');
+
+                    if (parts[0].Equals(maSachToSearch))
+                    {
+                        if (parts[8] == "0")
+                        {
+                            parts[8] = "chưa mượn";
+                        }
+                        else
+                        {
+                            parts[8] = "đang mượn";
+                        }
+                        Console.WriteLine($"              Thông tin sách có mã {maSachToSearch}:");
+                        Console.WriteLine("              +========================================+");
+                        Console.WriteLine($"              | Mã sách         | {parts[0],-20} |\n" +
+                            "               ________________________________________\n" +
+                            $"              | Tên sách        | {parts[1],-20} |\n" +
+                            "               ________________________________________\n" +
+                            $"              | Tác giả         | {parts[2],-20} |\n" +
+                            "               ________________________________________\n" +
+                            $"              | Nhà xuất bản    | {parts[3],-20} |\n" +
+                            "               ________________________________________\n" +
+                            $"              | Giá bán         | {parts[4],-20} |\n" +
+                            "               ________________________________________\n" +
+                            $"              | Năm phát hành   | {parts[5],-20} |\n" +
+                            "               ________________________________________\n" +
+                            $"              | Số trang        | {parts[6],-20} |\n" +
+                            "               ________________________________________\n" +
+                            $"              | Ngày nhập kho   | {parts[7],-20} |\n" +
+                            "               ________________________________________\n" +
+                            $"              | Tình trạng sách | {parts[8],-20} |\n"+
+                            "              +========================================+\n");
+
+                        //Console.ReadKey();
+                        find = true;
+                        break;
+                    }
+                }
+
+                if (!find)
+                {
+                    Console.WriteLine($"              Không tìm thấy sách có mã {maSachToSearch}.");
+                }
+
+                Console.Write("              Tiếp tục tìm kiếm? (Y): ");
+                char choice = Console.ReadKey().KeyChar;
+
+                if (char.ToUpper(choice) != 'Y')
+                {
+                    Console.Clear();
+                    break;
+                    
+                }
+            }
+            
+        }
+       
         public void AddBook()
         {
 
@@ -106,9 +151,9 @@ namespace QuanLyThuVien
             int tinhTrangSach;
             bool kiemtra;
 
-            Console.WriteLine("Nhập thông tin sách mới:");
+            Console.WriteLine("              Nhập thông tin sách mới:");
 
-            Console.Write("Mã sách: ");
+            Console.Write("              Mã sách: ");
             maSach = int.Parse(Console.ReadLine());
 
 
@@ -116,58 +161,58 @@ namespace QuanLyThuVien
             // Kiểm tra mã sách có tồn tại không
             if (IsBookExist(maSach))
             {
-                Console.WriteLine("Sách đã tồn tại trong thư viện.");
+                Console.WriteLine("              Sách đã tồn tại trong thư viện.");
                 return;
             }
 
-            Console.Write("Tên sách: ");
+            Console.Write("              Tên sách: ");
             tenSach = Console.ReadLine();
 
-            Console.Write("Tác giả: ");
+            Console.Write("              Tác giả: ");
             tacgia = Console.ReadLine();
 
-            Console.Write("Nhà xuất bản: ");
+            Console.Write("              Nhà xuất bản: ");
             nhaXuatBan = Console.ReadLine();
 
-            Console.Write("giá bán: ");
+            Console.Write("              giá bán: ");
             giaBan = int.Parse(Console.ReadLine());
 
 
-            Console.Write("Năm Phát hành: ");
+            Console.Write("              Năm Phát hành: ");
             kiemtra = DateTime.TryParseExact(Console.ReadLine(), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out namPhatHanh);
             //   kiemtra = uint.TryParse(Console.ReadLine(), out uint maPhieu);
             while (kiemtra == false)
             {
-                Console.Write("      Định dạng không hợp lệ, mời nhập lại (dd/mm/yyyy): ");
+                Console.Write("              Định dạng không hợp lệ, mời nhập lại (dd/mm/yyyy): ");
                 kiemtra = DateTime.TryParseExact(Console.ReadLine(), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out namPhatHanh);
             }
 
             //Console.Write("Năm Phát hành: ");
             //namPhatHanh = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", null).Date;
 
-            Console.Write("Số trang: ");
+            Console.Write("              Số trang: ");
             soTrang = int.Parse(Console.ReadLine());
 
-            Console.Write("Ngày nhập kho: ");
+            Console.Write("              Ngày nhập kho: ");
             ngayNhapKho = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", null);
 
 
             tinhTrangSach = 0;
 
-
+            string newBook= ($"{maSach};{tenSach};{tacgia};{nhaXuatBan};{giaBan};{namPhatHanh.ToString("dd-MM-yyyy")};{soTrang};{ngayNhapKho.ToString("dd-MM-yyyy")};{tinhTrangSach}");
 
 
             // Ghi thông tin sách vào file Sach.txt
             using (StreamWriter sw = File.AppendText("Sach.txt"))
             {
-                sw.WriteLine($"{maSach};{tenSach};{tacgia};{nhaXuatBan};{giaBan};{namPhatHanh.ToString("dd-MM-yyyy")};{soTrang};{ngayNhapKho.ToString("dd-MM-yyyy")};{tinhTrangSach}");
-                Console.WriteLine("Sách đã được thêm vào thư viện.");
+                sw.WriteLine(newBook);
+                Console.WriteLine("              Sách đã được thêm vào thư viện.");
             }
         }
 
         public void RemoveBook()
         {
-            Console.WriteLine("Nhập mã sách để xóa:");
+            Console.WriteLine("              Nhập mã sách để xóa:");
 
             string maSachToRemove = Console.ReadLine();
 
@@ -181,12 +226,12 @@ namespace QuanLyThuVien
                 if (parts[0].Equals(maSachToRemove) && parts[8].Equals("0"))
                 {
                     books.RemoveAt(i);
-                    Console.WriteLine("Sách đã được xóa khỏi thư viện.");
+                    Console.WriteLine("              Sách đã được xóa khỏi thư viện.");
                     break;
                 }
                 else if (parts[0].Equals(maSachToRemove) && !parts[8].Equals("0"))
                 {
-                    Console.WriteLine("Không thể xóa sách đang được mượn.");
+                    Console.WriteLine("              Không thể xóa sách đang được mượn.");
                     break;
                 }
             }
