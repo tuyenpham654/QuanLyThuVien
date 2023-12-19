@@ -335,7 +335,7 @@ namespace QuanLyThuVien
                 Console.WriteLine("                             +=========================================+\n");
 
                 Console.Write("                             Chọn chức năng Quản lý sách:");
-                int choice = GetChoice(1, 5);
+                int choice = GetChoice(1, 6);
 
                 switch (choice)
                 {
@@ -354,6 +354,9 @@ namespace QuanLyThuVien
                         return;
                     case 5:
                         Environment.Exit(0);
+                        break;
+                    case 6:
+                        books.UpdateBook();
                         break;
                 }
             }
