@@ -334,9 +334,11 @@ namespace QuanLyThuVien
                 Console.WriteLine("                             |_________________________________________|");
                 Console.WriteLine("                             |  -> 3. Xóa sách.                        |");
                 Console.WriteLine("                             |_________________________________________|");
-                Console.WriteLine("                             |  -> 4. Quay lại menu chính.             |");
+                Console.WriteLine("                             |  -> 4. Cập nhật thông tin.              |");
                 Console.WriteLine("                             |_________________________________________|");
-                Console.WriteLine("                             |  -> 5. Kết thúc chương trình.           |");
+                Console.WriteLine("                             |  -> 5. Quay lại menu chính.             |");
+                Console.WriteLine("                             |_________________________________________|");
+                Console.WriteLine("                             |  -> 6. Kết thúc chương trình.           |");
                 Console.WriteLine("                             +=========================================+\n");
 
                 Console.Write("                             Chọn chức năng Quản lý sách:");
@@ -355,14 +357,15 @@ namespace QuanLyThuVien
                         books.RemoveBook();
                         break;
                     case 4:
-                        Console.Clear();
-                        return;
-                    case 5:
-                        Environment.Exit(0);
-                        break;
-                    case 6:
                         books.UpdateBook();
                         break;
+                    case 5:
+                        Console.Clear();
+                        return;
+                    case 6:
+                        Environment.Exit(0);
+                        break;
+                   
                 }
             }
         }

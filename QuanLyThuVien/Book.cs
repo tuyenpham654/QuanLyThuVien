@@ -238,6 +238,11 @@ namespace QuanLyThuVien
             return int.TryParse(input, out _);
         }
 
+        public static bool IsDouble(string input)
+        {
+            return double.TryParse(input, out _);
+        }
+
         // xóa
         public void RemoveBook()
         {
@@ -304,17 +309,17 @@ namespace QuanLyThuVien
         // cập nhật
         public void UpdateBook()
         {
-            Console.Write("Nhập mã sách cần cập nhật: ");
+            Console.Write("              Nhập mã sách cần cập nhật: ");
             string maSachToUpdate = Console.ReadLine();
 
             List<string> books = File.ReadAllLines("Sach.txt").ToList();
             bool found = false;
-
+            bool kiemTra = true;
             for (int i = 0; i < books.Count; i++)
             {
                 string[] parts = books[i].Split(';');
                 string trangThai = "";
-                bool kiemTra;
+              
                 if (parts[0].Equals(maSachToUpdate))
                 {
                     Console.WriteLine($"              Thông tin sách có mã {maSachToUpdate}:");
@@ -357,47 +362,152 @@ namespace QuanLyThuVien
 
                     Console.Write("              Nhà xuất bản: ");
                     string nhaXuatBan= Console.ReadLine();
-                    if (nhaXuatBan == "") tacGia = parts[3];
+                    if (nhaXuatBan == "") nhaXuatBan = parts[3];
 
                     Console.Write("              Giá bán: ");
                     double giaBan = 0;
-                    string giaBanInPut= Console.ReadLine();
-                 //    giaBan=double.Parse(Console.ReadLine());
-                    if (giaBanInPut == "") giaBan = double.Parse(parts[4]);
 
+                    string giaBanInPut= Console.ReadLine();
+
+                    do {
+
+                        if (giaBanInPut == "") {
+
+                            giaBan = double.Parse(parts[4]);
+                            kiemTra = true;
+                        }
+                        else
+                        {
+                            if (IsDouble(giaBanInPut))
+                            {
+                                giaBan = double.Parse(giaBanInPut);
+                                if(giaBan <= 0)
+                                {
+                                    Console.Write("              Giá bán phải lớn hơn 0, vui lòng nhập lại: ");
+                                    giaBanInPut = Console.ReadLine();
+                                    kiemTra = false;
+                                }
+                                else
+                                {
+                                    kiemTra= true;
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                // Lua chon khong hop le 
+                                Console.Write("              Nhập sai định dạng, vui lòng nhập lại: ");
+                                giaBanInPut = Console.ReadLine();
+                                kiemTra = false;
+                            }
+                        }
+                    }while (kiemTra==false);
 
                     Console.Write("              Năm Phát hành: ");
 
-                    DateTime namPhatHanh;
-                    kiemTra = DateTime.TryParseExact(Console.ReadLine(), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out namPhatHanh);
-                 /*   if (namPhatHanhInPut == "" || DateTime.TryParse(namPhatHanhInput, out namPhatHanh))
-                    { namPhatHanh = DateTime.Parse(parts[5]); }
-                    else
+                    string namPhatHanhInPut=Console.ReadLine();
+                    DateTime ngayPhatHanh = DateTime.Parse("01/01/0001");
+                    do
                     {
-                        //   kiemTra = DateTime.TryParseExact(Console.ReadLine(), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out namPhatHanh);
-                        while (kiemTra == false)
+                        if (namPhatHanhInPut == "")
                         {
-                            Console.Write("              Định dạng không hợp lệ, mời nhập lại (dd/mm/yyyy): ");
-                            kiemTra = DateTime.TryParseExact(Console.ReadLine(), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out namPhatHanh);
+                            ngayPhatHanh = DateTime.ParseExact(parts[5],"dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None);
+                            break;
                         }
-                    }*/
-                    if (namPhatHanh == null)
-                    {
-                        namPhatHanh = DateTime.Parse(parts[5]);
-                    }
-                    kiemTra = DateTime.TryParseExact(Console.ReadLine(), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out namPhatHanh);
-                    //   kiemtra = uint.TryParse(Console.ReadLine(), out uint maPhieu);
-                    while (kiemTra == false)
-                    {
-                        Console.Write("              Định dạng không hợp lệ, mời nhập lại (dd/mm/yyyy): ");
-                        kiemTra = DateTime.TryParseExact(Console.ReadLine(), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out namPhatHanh);
-                    }
+                        else
+                        {
+                          //  namPhatHanh = DateTime.Parse(namPhatHanhInPut);
+                            kiemTra = DateTime.TryParseExact(namPhatHanhInPut, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out ngayPhatHanh);
+                            if (kiemTra == false)
+                            {
+                                Console.Write("              Nhập sai định dạng (dd/MM/yyyy), vui lòng nhập lại: ");
+                                namPhatHanhInPut = Console.ReadLine();
+                         
+                            }
+                            else
+                            {
+                                ngayPhatHanh = DateTime.ParseExact(namPhatHanhInPut, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None);
+                                kiemTra = true;
+                         
+                            }
+                        }
+                    }while(kiemTra==false);
 
 
-                    // Cập nhật các thông tin khác của sách...
+                    Console.Write("              Số trang: ");
+                    int soTrang = 0;
+
+                    string soTrangInput = Console.ReadLine();
+
+                    do
+                    {
+
+                        if (soTrangInput == "")
+                        {
+
+                            soTrang = int.Parse(parts[6]);
+                            kiemTra = true;
+                        }
+                        else
+                        {
+                            if (IsDouble(soTrangInput))
+                            {
+                                soTrang = int.Parse(soTrangInput);
+                                if (giaBan <= 0)
+                                {
+                                    Console.Write("              Số trang phải lớn hơn 0, vui lòng nhập lại: ");
+                                    soTrangInput = Console.ReadLine();
+                                    kiemTra = false;
+                                }
+                                else
+                                {
+                                    kiemTra = true;
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                // Lua chon khong hop le 
+                                Console.Write("              Nhập sai định dạng, vui lòng nhập lại: ");
+                                soTrangInput = Console.ReadLine();
+                                kiemTra = false;
+                            }
+                        }
+                    } while (kiemTra == false);
+
+                    Console.Write("              Ngày tạo: ");
+                    string ngayNhapKhoInput = Console.ReadLine();
+                    DateTime ngayNhap=DateTime.Parse("01/01/0001");
+                    do
+                    {
+                        if (ngayNhapKhoInput == "")
+                        {
+                            ngayNhap = DateTime.ParseExact(parts[7],"dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None);
+                           
+                           
+                        }
+                        else if (ngayNhapKhoInput != "")
+                        {
+                            //ngayTao = DateTime.Parse(namPhatHanhInPut);
+                            kiemTra = DateTime.TryParseExact(ngayNhapKhoInput, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out ngayNhap);
+                            if (kiemTra == false)
+                            {
+                                Console.Write("              Nhập sai định dạng (dd/MM/yyyy), vui lòng nhập lại, hoặc nhấn Enter để giữ nguyên: ");
+                                ngayNhapKhoInput = Console.ReadLine();
+                            }
+                            else
+                            {
+                                ngayNhap = DateTime.ParseExact(ngayNhapKhoInput, "dd/MM/yyyy",null, System.Globalization.DateTimeStyles.None);
+                                kiemTra = true;
+                                
+                            }
+                        }
+                    } while (kiemTra == false);
+
+
 
                     // Tạo thông tin sách mới
-                    string updatedBook = $"{maSachToUpdate},{tenSach},{tacGia},..."; // Cập nhật các thông tin khác của sách
+                    string updatedBook = $"{maSachToUpdate};{tenSach};{tacGia};{nhaXuatBan};{giaBan};{ngayPhatHanh.ToString("dd/MM/yyyy")};{soTrang};{ngayNhap.ToString("dd/MM/yyyy")};{parts[8]}"; // Cập nhật các thông tin khác của sách
 
                     // Cập nhật thông tin sách trong danh sách
                     books[i] = updatedBook;
