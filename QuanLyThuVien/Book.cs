@@ -541,12 +541,6 @@ namespace QuanLyThuVien
                     check = true;
                     break;
                 }
-
-                /*
-                                if (parts[0].Equals(maSach))
-                                {
-                                    return true;
-                                }*/
             }
 
             return check;
