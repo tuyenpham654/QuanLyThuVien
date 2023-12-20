@@ -102,32 +102,33 @@ namespace QuanLyThuVien
         public void RemoveBD()
         {
             bool kiemTra;
-            Console.Write("              Nhập mã bạn đọc muốn xóa: ");
-            string idBanDocToRemove = Console.ReadLine();
+            Console.Write("              Nhập mã bạn đọc để xóa: ");
+            string maBDToRemove = Console.ReadLine();
             do
             {
-                if (IsNumeric(idBanDocToRemove))
+                if (IsNumeric(maBDToRemove))
                 {
                     // Hop le
                     // Đọc thông tin sách từ file Sach.txt
-                    List<string> BD = File.ReadAllLines("BanDoc.txt").ToList();
-                    int ma = int.Parse(idBanDocToRemove);
+                    List<string> books = File.ReadAllLines("BanDoc.txt").ToList();
+                    int ma = int.Parse(maBDToRemove);
                     if (IsBDExist(ma))
                     {
-                        foreach (var bd in BD)
+                        for (int i = 0; i < books.Count; i++)
                         {
-                            string[] part = bd.Split(';');
-                            BD.RemoveAt(idBanDoc);
-                            Console.WriteLine("                  Xóa bạn đọc thành công.");
-                            Console.ReadKey();
-                            Console.Clear();
-                            break;
+                            string[] parts = books[i].Split(';');
 
-
-
-                        }                            
+                            if (parts[0].Equals(maBDToRemove))
+                            {
+                                books.RemoveAt(i);
+                                Console.WriteLine("              Xóa bạn đọc thành công.");
+                                Console.ReadKey();
+                                Console.Clear();
+                                break;
+                            }
+                        }
                         // Ghi đè thông tin sách vào file Sach.txt
-                        File.WriteAllLines("BanDoc.txt", BD);
+                        File.WriteAllLines("BanDoc.txt", books);
                         return;
                     }
                     else
@@ -144,7 +145,7 @@ namespace QuanLyThuVien
                 else
                 {
                     Console.Write("              Nhập sai định dạng, vui  lòng nhập lại: ");
-                    idBanDocToRemove = Console.ReadLine();
+                    maBDToRemove = Console.ReadLine();
                     kiemTra = false;
                 }
             } while (kiemTra == false);
