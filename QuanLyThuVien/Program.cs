@@ -28,7 +28,7 @@ namespace QuanLyThuVien
                 while (true)
                 {
                     ShowMainMenu();
-                    int choice = GetChoice(1, 3);
+                    int choice = GetChoice(1, 4);
                     switch (choice)
                     {
                         case 1:
@@ -38,6 +38,9 @@ namespace QuanLyThuVien
                             ManageBorrowing();
                             break;
                         case 3:
+                            ManageBD();
+                            break;
+                        case 4:
                             Console.WriteLine("Thoát khỏi hệ thống.");
                             return;
                     }
@@ -294,7 +297,9 @@ namespace QuanLyThuVien
             Console.WriteLine("                             |__________________________________|");
             Console.WriteLine("                             | 2. Quản lý phiếu mượn            |");
             Console.WriteLine("                             |__________________________________|");
-            Console.WriteLine("                             | 3. Thoát                         |");
+            Console.WriteLine("                             | 3. Quản lý bạn đọc               |");
+            Console.WriteLine("                             |__________________________________|");
+            Console.WriteLine("                             | 4. Thoát                         |");
             Console.WriteLine("                             +==================================+\n");
 
 
@@ -409,5 +414,53 @@ namespace QuanLyThuVien
             }
         }
 
+        static void ManageBD()
+        {
+            Console.Clear();
+            while (true)
+            {
+
+                BanDoc BD = new BanDoc();
+                Console.WriteLine("                             +=========================================+");
+                Console.WriteLine("                             |            QUẢN LÝ THƯ VIỆN             |");
+                Console.WriteLine("                             +=========================================+");
+                Console.WriteLine("                             | Quản lý sách.                           |");
+                Console.WriteLine("                             +=========================================+");
+                Console.WriteLine("                             |  -> 1. Hiển thị thông tin bạn đọc.      |");
+                Console.WriteLine("                             |_________________________________________|");
+                Console.WriteLine("                             |  -> 2. Thêm bạn đọc.                    |");
+                Console.WriteLine("                             |_________________________________________|");
+                Console.WriteLine("                             |  -> 3. Xóa bạn đọc.                     |");
+                Console.WriteLine("                             |_________________________________________|");
+                Console.WriteLine("                             |  -> 4. Quay lại menu chính.             |");
+                Console.WriteLine("                             |_________________________________________|");
+                Console.WriteLine("                             |  -> 5. Kết thúc chương trình            |");
+                Console.WriteLine("                             +=========================================+\n");
+
+                Console.Write("                             Chọn chức năng Quản lý sách:");
+                int choice = GetChoice(1, 5);
+
+                switch (choice)
+                {
+                    case 1:
+
+                        BD.DisplayBDInformation();
+                        break;
+                    case 2:
+                        BD.AddBD();
+                        break;
+                    case 3:
+                        BD.RemoveBD();
+                        break;
+                    case 4:
+                        Console.Clear();
+                        return;
+                    case 5:
+                        Environment.Exit(0);
+                        break;
+
+                }
+            }
+        }
     }
 }
