@@ -293,7 +293,7 @@ namespace QuanLyThuVien
             Console.WriteLine("                             +==================================+");
             Console.WriteLine("                             |         QUẢN LÝ THƯ VIỆN         |");
             Console.WriteLine("                             +==================================+");
-            Console.WriteLine("                             | 1. Quản lý sách.                 |");
+            Console.WriteLine("                             | 1. Quản lý sách                  |");
             Console.WriteLine("                             |__________________________________|");
             Console.WriteLine("                             | 2. Quản lý phiếu mượn            |");
             Console.WriteLine("                             |__________________________________|");
@@ -326,7 +326,7 @@ namespace QuanLyThuVien
                 Console.WriteLine("                             +=========================================+");
                 Console.WriteLine("                             |            QUẢN LÝ THƯ VIỆN             |");
                 Console.WriteLine("                             +=========================================+");
-                Console.WriteLine("                             | Quản lý sách.                           |");
+                Console.WriteLine("                             | Quản lý sách                            |");
                 Console.WriteLine("                             +=========================================+");
                 Console.WriteLine("                             |  -> 1. Hiển thị thông tin sách.         |");
                 Console.WriteLine("                             |_________________________________________|");
@@ -336,7 +336,7 @@ namespace QuanLyThuVien
                 Console.WriteLine("                             |_________________________________________|");
                 Console.WriteLine("                             |  -> 4. Quay lại menu chính.             |");
                 Console.WriteLine("                             |_________________________________________|");
-                Console.WriteLine("                             |  -> 5. Kết thúc chương trình            |");
+                Console.WriteLine("                             |  -> 5. Kết thúc chương trình.           |");
                 Console.WriteLine("                             +=========================================+\n");
 
                 Console.Write("                             Chọn chức năng Quản lý sách:");
@@ -379,7 +379,7 @@ namespace QuanLyThuVien
                 Console.WriteLine("                             +=========================================+");
                 Console.WriteLine("                             | Quản lý phiếu mượn                      |");
                 Console.WriteLine("                             +=========================================+");
-                Console.WriteLine("                             |  -> 1. Hiển thị thông tin phiếu mượn    |");
+                Console.WriteLine("                             |  -> 1. Hiển thị thông tin phiếu mượn.   |");
                 Console.WriteLine("                             |_________________________________________|");
                 Console.WriteLine("                             |  -> 2. Mượn sách.                       |");
                 Console.WriteLine("                             |_________________________________________|");
@@ -387,7 +387,7 @@ namespace QuanLyThuVien
                 Console.WriteLine("                             |_________________________________________|");
                 Console.WriteLine("                             |  -> 4. Quay lại menu chính.             |");
                 Console.WriteLine("                             |_________________________________________|");
-                Console.WriteLine("                             |  -> 5. Kết thúc chương trình            |");
+                Console.WriteLine("                             |  -> 5. Kết thúc chương trình.           |");
                 Console.WriteLine("                             +=========================================+\n");
                 Console.Write("                             Chọn chức năng Quản lý phiếu mượn:");
 
@@ -424,7 +424,7 @@ namespace QuanLyThuVien
                 Console.WriteLine("                             +=========================================+");
                 Console.WriteLine("                             |            QUẢN LÝ THƯ VIỆN             |");
                 Console.WriteLine("                             +=========================================+");
-                Console.WriteLine("                             | Quản lý sách.                           |");
+                Console.WriteLine("                             | Quản lý bạn đọc                         |");
                 Console.WriteLine("                             +=========================================+");
                 Console.WriteLine("                             |  -> 1. Hiển thị thông tin bạn đọc.      |");
                 Console.WriteLine("                             |_________________________________________|");
@@ -434,10 +434,10 @@ namespace QuanLyThuVien
                 Console.WriteLine("                             |_________________________________________|");
                 Console.WriteLine("                             |  -> 4. Quay lại menu chính.             |");
                 Console.WriteLine("                             |_________________________________________|");
-                Console.WriteLine("                             |  -> 5. Kết thúc chương trình            |");
+                Console.WriteLine("                             |  -> 5. Kết thúc chương trình.           |");
                 Console.WriteLine("                             +=========================================+\n");
 
-                Console.Write("                             Chọn chức năng Quản lý sách:");
+                Console.Write("                             Chọn chức năng Quản bạn đọc:");
                 int choice = GetChoice(1, 5);
 
                 switch (choice)
