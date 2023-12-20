@@ -87,7 +87,7 @@ namespace QuanLyThuVien
             
 
 
-            string newBD = ($"{idBanDoc};{name};{ngayDK.ToString("dd-MM-yyyy")}");
+            string newBD = ($"{idBanDoc};{name};{ngayDK.ToString("dd/MM/yyyy")}");
 
 
             // Ghi thông tin sách vào file Sach.txt
