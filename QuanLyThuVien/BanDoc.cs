@@ -53,7 +53,7 @@ namespace QuanLyThuVien
 
             Console.Write("              Mã bạn đọc: ");
             kiemtra = int.TryParse(Console.ReadLine(), out idBanDoc);
-            while (kiemtra == false || idBanDoc < 0)
+            while (kiemtra == false || idBanDoc <= 0)
             {
                 Console.Write("              Dữ liệu không hợp lệ, mời nhập lại: ");
                 kiemtra = int.TryParse(Console.ReadLine(), out idBanDoc);

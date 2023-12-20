@@ -157,7 +157,7 @@ namespace QuanLyThuVien
 
             Console.Write("              Mã sách: ");
             kiemtra = int.TryParse(Console.ReadLine(), out maSach);
-            while (kiemtra == false||maSach<0)
+            while (kiemtra == false||maSach <= 0)
             {
                 Console.Write("              Dữ liệu không hợp lệ, mời nhập lại: ");
                 kiemtra = int.TryParse(Console.ReadLine(), out maSach);
