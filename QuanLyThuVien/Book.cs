@@ -186,7 +186,7 @@ namespace QuanLyThuVien
             Console.Write("              giá bán: ");
            // giaBan = double.Parse(Console.ReadLine());
             kiemtra = double.TryParse(Console.ReadLine(), out giaBan);
-            while (kiemtra == false||giaBan<0)
+            while (kiemtra == false||giaBan<=0)
             {
                 Console.Write("              Dữ liệu không hợp lệ, mời nhập lại: ");
                 kiemtra = double.TryParse(Console.ReadLine(), out giaBan);
@@ -202,7 +202,7 @@ namespace QuanLyThuVien
 
             Console.Write("              Số trang: ");
             kiemtra = int.TryParse(Console.ReadLine(), out soTrang);
-            while (kiemtra == false || soTrang < 0)
+            while (kiemtra == false || soTrang <= 0)
             {
                 Console.Write("              Dữ liệu không hợp lệ, mời nhập lại: ");
                 kiemtra = int.TryParse(Console.ReadLine(), out soTrang);
