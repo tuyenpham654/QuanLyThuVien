@@ -219,7 +219,7 @@ namespace QuanLyThuVien
 
             tinhTrangSach = 0;
 
-            string newBook= ($"{maSach};{tenSach};{tacgia};{nhaXuatBan};{giaBan};{namPhatHanh.ToString("dd-MM-yyyy")};{soTrang};{ngayNhapKho.ToString("dd-MM-yyyy")};{tinhTrangSach}");
+            string newBook= ($"{maSach};{tenSach};{tacgia};{nhaXuatBan};{giaBan};{namPhatHanh.ToString("dd/MM/yyyy")};{soTrang};{ngayNhapKho.ToString("dd/MM/yyyy")};{tinhTrangSach}");
 
 
             // Ghi thông tin sách vào file Sach.txt
