@@ -306,7 +306,7 @@ namespace QuanLyThuVien
             int choice;
             while (!int.TryParse(Console.ReadLine(), out choice) || choice < min || choice > max)
             {
-                Console.WriteLine("                             Nhập lại lựa chọn từ {0} đến {1}.", min, max);
+                Console.Write("                             Nhập lại lựa chọn từ {0} đến {1}: ", min, max);
             }
             return choice;
         }

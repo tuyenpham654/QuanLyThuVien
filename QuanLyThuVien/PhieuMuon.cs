@@ -26,7 +26,7 @@ namespace QuanLyThuVien
 
         public void DisplayBorrowingInformation()
         {
-            Console.WriteLine("Thông tin phiếu mượn:");
+            Console.WriteLine("              Thông tin phiếu mượn:");
 
             List<string> borrowings = File.ReadAllLines("PhieuMuon.txt").ToList();
             Console.WriteLine("              +==========================================================================================================+");
@@ -47,17 +47,19 @@ namespace QuanLyThuVien
                 Console.WriteLine($"              | {parts[0],-14}| {parts[1],-11} | {parts[2],-11}| {parts[3],-16}| {parts[4],-20} | {tinhTrang,-21}|");
             }
             Console.WriteLine("              +==========================================================================================================+");
+            Console.ReadKey();
+            Console.Clear();
         }
 
         public void BorrowBook()
         {
-            Console.WriteLine("Nhập mã sách để mượn:");
+            Console.Write("              Nhập mã sách để mượn: ");
 
             string maSach = Console.ReadLine();
 
             if (IsBookAvailable(maSach))
             {
-                Console.WriteLine("Nhập mã bạn đọc:");
+                Console.Write("              Nhập mã bạn đọc: ");
 
                 string maBanDoc = Console.ReadLine();
 
@@ -77,24 +79,39 @@ namespace QuanLyThuVien
 
                     File.WriteAllLines("PhieuMuon.txt", borrowings);
 
-                    Console.WriteLine("Đã tạo phiếu mượn thành công.");
+                    Console.WriteLine("              Đã tạo phiếu mượn thành công.");
+                    Console.ReadKey();
+                    Console.Clear();
                 }
                 else
                 {
-                    Console.WriteLine("Mã bạn đọc không tồn tại.");
+                    Console.WriteLine("              Mã bạn đọc không tồn tại.");
+                    Console.ReadKey();
+                    Console.Clear();
                 }
             }
             else
             {
-                Console.WriteLine("Sách không có sẵn để mượn.");
+                Console.WriteLine("              Sách không có sẵn để mượn.");
+                Console.ReadKey();
+                Console.Clear();
             }
         }
 
         public void ReturnBook()
         {
-            Console.WriteLine("Nhập số phiếu mượn để trả sách:");
+            bool kiemTra;
+            int soPhieuMuonToReturn;
+            Console.Write("              Nhập mã số phiếu mượn để trả sách: ");
 
-            int soPhieuMuonToReturn = int.Parse(Console.ReadLine());
+            //     int soPhieuMuonToReturn = int.Parse(Console.ReadLine());
+
+            kiemTra = int.TryParse(Console.ReadLine(), out soPhieuMuonToReturn);
+            while (kiemTra == false || soPhieuMuonToReturn < 0)
+            {
+                Console.Write("              Dữ liệu không hợp lệ, mời nhập lại: ");
+                kiemTra = int.TryParse(Console.ReadLine(), out soPhieuMuonToReturn);
+            }
 
             List<string> borrowings = File.ReadAllLines("PhieuMuon.txt").ToList();
 
@@ -109,17 +126,23 @@ namespace QuanLyThuVien
                     File.WriteAllLines("Sach.txt", GetUpdatedBooksList(parts[2]));
                     File.WriteAllLines("PhieuMuon.txt", GetUpdatedBorrowingsList(borrowings, soPhieuMuonToReturn));
 
-                    Console.WriteLine("Đã trả sách thành công.");
+                    Console.WriteLine("              Đã trả sách thành công.");
+                    Console.ReadKey();
+                    Console.Clear();
                     return;
                 }
                 else if (int.Parse(parts[0]) == soPhieuMuonToReturn && parts[5] == "0")
                 {
-                    Console.WriteLine("Phiếu mượn đã được trả trước đó.");
+                    Console.WriteLine("              Phiếu mượn đã được trả trước đó.");
+                    Console.ReadKey();
+                    Console.Clear();
                     return;
                 }
             }
 
-            Console.WriteLine("Không tìm thấy số phiếu mượn cần trả.");
+            Console.WriteLine("              Không tìm thấy số phiếu mượn cần trả.");
+            Console.ReadKey();
+            Console.Clear();
         }
 
         public bool IsBookAvailable(string maSach)
@@ -138,6 +161,12 @@ namespace QuanLyThuVien
 
             return false;
         }
+
+        public static bool IsNumeric(string input)
+        {
+            return int.TryParse(input, out _);
+        }
+
 
         public bool IsReaderExist(string maBanDoc)
         {

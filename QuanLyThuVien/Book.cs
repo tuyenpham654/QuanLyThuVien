@@ -156,7 +156,12 @@ namespace QuanLyThuVien
             Console.WriteLine("              Nhập thông tin sách mới:");
 
             Console.Write("              Mã sách: ");
-            maSach = int.Parse(Console.ReadLine());
+            kiemtra = int.TryParse(Console.ReadLine(), out maSach);
+            while (kiemtra == false||maSach<0)
+            {
+                Console.Write("              Dữ liệu không hợp lệ, mời nhập lại: ");
+                kiemtra = int.TryParse(Console.ReadLine(), out maSach);
+            }
 
 
 
@@ -179,28 +184,32 @@ namespace QuanLyThuVien
             nhaXuatBan = Console.ReadLine();
 
             Console.Write("              giá bán: ");
-            giaBan = double.Parse(Console.ReadLine());
-
+           // giaBan = double.Parse(Console.ReadLine());
+            kiemtra = double.TryParse(Console.ReadLine(), out giaBan);
+            while (kiemtra == false||giaBan<0)
+            {
+                Console.Write("              Dữ liệu không hợp lệ, mời nhập lại: ");
+                kiemtra = double.TryParse(Console.ReadLine(), out giaBan);
+            }
 
             Console.Write("              Năm Phát hành: ");
             kiemtra = DateTime.TryParseExact(Console.ReadLine(), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out namPhatHanh);
-            //   kiemtra = uint.TryParse(Console.ReadLine(), out uint maPhieu);
             while (kiemtra == false)
             {
                 Console.Write("              Định dạng không hợp lệ, mời nhập lại (dd/mm/yyyy): ");
                 kiemtra = DateTime.TryParseExact(Console.ReadLine(), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out namPhatHanh);
             }
 
-            //Console.Write("Năm Phát hành: ");
-            //namPhatHanh = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", null).Date;
-
             Console.Write("              Số trang: ");
-            soTrang = int.Parse(Console.ReadLine());
+            kiemtra = int.TryParse(Console.ReadLine(), out soTrang);
+            while (kiemtra == false || soTrang < 0)
+            {
+                Console.Write("              Dữ liệu không hợp lệ, mời nhập lại: ");
+                kiemtra = int.TryParse(Console.ReadLine(), out soTrang);
+            }
 
             Console.Write("              Ngày nhập kho: ");
-          //  ngayNhapKho = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", null);
             kiemtra = DateTime.TryParseExact(Console.ReadLine(), "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out ngayNhapKho);
-            //   kiemtra = uint.TryParse(Console.ReadLine(), out uint maPhieu);
             while (kiemtra == false)
             {
                 Console.Write("              Định dạng không hợp lệ, mời nhập lại (dd/mm/yyyy): ");
@@ -223,37 +232,71 @@ namespace QuanLyThuVien
             }
         }
 
+
+        public static bool IsNumeric(string input)
+        {
+            return int.TryParse(input, out _);
+        }
+
         // xóa
         public void RemoveBook()
         {
+            bool kiemTra;
             Console.Write("              Nhập mã sách để xóa: ");
-
             string maSachToRemove = Console.ReadLine();
-
-            // Đọc thông tin sách từ file Sach.txt
-            List<string> books = File.ReadAllLines("Sach.txt").ToList();
-
-            for (int i = 0; i < books.Count; i++)
+            do
             {
-                string[] parts = books[i].Split(';');
-
-                if (parts[0].Equals(maSachToRemove) && parts[8].Equals("0"))
+                if (IsNumeric(maSachToRemove))
                 {
-                    books.RemoveAt(i);
-                    Console.WriteLine("              Sách đã được xóa khỏi thư viện.");
-                    Console.ReadKey();
-                    Console.Clear ();
-                    break;
-                }
-                else if (parts[0].Equals(maSachToRemove) && !parts[8].Equals("0"))
-                {
-                    Console.WriteLine("              Không thể xóa sách đang được mượn.");
-                    break;
-                }
-            }
+                    // Hop le
+                    // Đọc thông tin sách từ file Sach.txt
+                    List<string> books = File.ReadAllLines("Sach.txt").ToList();
+                    int ma = int.Parse(maSachToRemove);
+                    if (IsBookExist(ma))
+                    { 
+                        for (int i = 0; i < books.Count; i++)
+                        {
+                            string[] parts = books[i].Split(';');
 
-            // Ghi đè thông tin sách vào file Sach.txt
-            File.WriteAllLines("Sach.txt", books);
+                            if (parts[0].Equals(maSachToRemove) && parts[8].Equals("0"))
+                            {
+                                books.RemoveAt(i);
+                                Console.WriteLine("              Sách đã được xóa khỏi thư viện.");
+                                Console.ReadKey();
+                                Console.Clear();
+                                break;
+                            }
+                            else if (parts[0].Equals(maSachToRemove) && !parts[8].Equals("0"))
+                            {
+                                Console.WriteLine("              Không thể xóa sách đang được mượn.");
+                                Console.ReadKey();
+                                Console.Clear();
+                                break;
+                            }
+                        }
+                        // Ghi đè thông tin sách vào file Sach.txt
+                        File.WriteAllLines("Sach.txt", books);
+                        return;
+                    }
+                    else
+                    {
+
+                        Console.WriteLine("              Mã sách không tồn tại.");
+                        Console.ReadKey();
+                        Console.Clear();
+                        break;
+                    }
+
+                   
+                }
+                else
+                {
+                    Console.Write("              Nhập sai định dạng, vui  lòng nhập lại: ");
+                    maSachToRemove = Console.ReadLine();
+                    kiemTra = false;
+                }
+            }while (kiemTra==false);
+          
         }
 
       
