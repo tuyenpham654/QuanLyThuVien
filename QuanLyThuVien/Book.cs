@@ -311,7 +311,7 @@ namespace QuanLyThuVien
         {
             Console.Write("              Nhập mã sách cần cập nhật: ");
             string maSachToUpdate = Console.ReadLine();
-
+           
             List<string> books = File.ReadAllLines("Sach.txt").ToList();
             bool found = false;
             bool kiemTra = true;
@@ -322,7 +322,8 @@ namespace QuanLyThuVien
               
                 if (parts[0].Equals(maSachToUpdate))
                 {
-                    Console.WriteLine($"              Thông tin sách có mã {maSachToUpdate}:");
+                    Console.Clear();
+                    Console.WriteLine($"\n              Thông tin sách có mã {maSachToUpdate}\n");
                     if (parts[8] == "0")
                     {
                         trangThai = "chưa mượn";
@@ -512,15 +513,20 @@ namespace QuanLyThuVien
                     // Cập nhật thông tin sách trong danh sách
                     books[i] = updatedBook;
 
-                    Console.WriteLine($"Thông tin sách đã được cập nhật.");
+                    Console.WriteLine($"              Thông tin sách đã được cập nhật.");
                     found = true;
+                    Console.ReadKey();
+                    Console.Clear();
                     break;
+                  
                 }
             }
 
             if (!found)
             {
-                Console.WriteLine($"Không tìm thấy sách có mã {maSachToUpdate}.");
+                Console.WriteLine($"              Không tìm thấy sách có mã {maSachToUpdate}.");
+                Console.ReadKey();
+                Console.Clear();
             }
 
             // Ghi danh sách sách đã được cập nhật vào file
