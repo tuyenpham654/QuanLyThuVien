@@ -435,13 +435,15 @@ namespace QuanLyThuVien
                 Console.WriteLine("                             |_________________________________________|");
                 Console.WriteLine("                             |  -> 3. Xóa bạn đọc.                     |");
                 Console.WriteLine("                             |_________________________________________|");
-                Console.WriteLine("                             |  -> 4. Quay lại menu chính.             |");
+                Console.WriteLine("                             |  -> 4. Cập nhật thông tin.              |");
                 Console.WriteLine("                             |_________________________________________|");
-                Console.WriteLine("                             |  -> 5. Kết thúc chương trình.           |");
+                Console.WriteLine("                             |  -> 5. Quay lại menu chính.             |");
+                Console.WriteLine("                             |_________________________________________|");
+                Console.WriteLine("                             |  -> 6. Kết thúc chương trình.           |");
                 Console.WriteLine("                             +=========================================+\n");
 
                 Console.Write("                             Chọn chức năng Quản bạn đọc:");
-                int choice = GetChoice(1, 5);
+                int choice = GetChoice(1, 6);
 
                 switch (choice)
                 {
@@ -456,9 +458,12 @@ namespace QuanLyThuVien
                         BD.RemoveBD();
                         break;
                     case 4:
+                        BD.UpdateBD();
+                        break;
+                    case 5:
                         Console.Clear();
                         return;
-                    case 5:
+                    case 6:
                         Environment.Exit(0);
                         break;
 
