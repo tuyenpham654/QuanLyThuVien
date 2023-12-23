@@ -391,7 +391,7 @@ namespace QuanLyThuVien
                                 else
                                 {
                                     kiemTra= true;
-                                    break;
+                                    
                                 }
                             }
                             else
@@ -404,16 +404,16 @@ namespace QuanLyThuVien
                         }
                     }while (kiemTra==false);
 
+                    DateTime ngayPhatHanh = DateTime.ParseExact(parts[5], "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None);
                     Console.Write("              Năm Phát hành: ");
-
                     string namPhatHanhInPut=Console.ReadLine();
-                    DateTime ngayPhatHanh = DateTime.Parse("01/01/0001");
+                   
                     do
                     {
                         if (namPhatHanhInPut == "")
                         {
                             ngayPhatHanh = DateTime.ParseExact(parts[5],"dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None);
-                            break;
+                            kiemTra = true;
                         }
                         else
                         {
@@ -451,10 +451,10 @@ namespace QuanLyThuVien
                         }
                         else
                         {
-                            if (IsDouble(soTrangInput))
+                            if (IsNumeric(soTrangInput))
                             {
                                 soTrang = int.Parse(soTrangInput);
-                                if (giaBan <= 0)
+                                if (soTrang <= 0)
                                 {
                                     Console.Write("              Số trang phải lớn hơn 0, vui lòng nhập lại: ");
                                     soTrangInput = Console.ReadLine();
@@ -463,7 +463,7 @@ namespace QuanLyThuVien
                                 else
                                 {
                                     kiemTra = true;
-                                    break;
+                                    
                                 }
                             }
                             else
@@ -476,15 +476,16 @@ namespace QuanLyThuVien
                         }
                     } while (kiemTra == false);
 
-                    Console.Write("              Ngày tạo: ");
+                    Console.Write("              Ngày nhập kho: ");
                     string ngayNhapKhoInput = Console.ReadLine();
-                    DateTime ngayNhap=DateTime.Parse("01/01/0001");
+                    DateTime ngayNhap = DateTime.ParseExact(parts[7], "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None);
+
                     do
                     {
                         if (ngayNhapKhoInput == "")
                         {
                             ngayNhap = DateTime.ParseExact(parts[7],"dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None);
-                           
+                           kiemTra=true;
                            
                         }
                         else if (ngayNhapKhoInput != "")
@@ -493,8 +494,12 @@ namespace QuanLyThuVien
                             kiemTra = DateTime.TryParseExact(ngayNhapKhoInput, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out ngayNhap);
                             if (kiemTra == false)
                             {
-                                Console.Write("              Nhập sai định dạng (dd/MM/yyyy), vui lòng nhập lại, hoặc nhấn Enter để giữ nguyên: ");
+                                Console.Write("              Nhập sai định dạng (dd/MM/yyyy), vui lòng nhập lại: ");
                                 ngayNhapKhoInput = Console.ReadLine();
+                                
+                                kiemTra=false;
+                                
+
                             }
                             else
                             {
