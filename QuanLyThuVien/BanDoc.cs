@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -110,25 +111,35 @@ namespace QuanLyThuVien
                 {
                     // Hop le
                     // Đọc thông tin sách từ file Sach.txt
-                    List<string> books = File.ReadAllLines("BanDoc.txt").ToList();
+                    List<string> banDoc = File.ReadAllLines("BanDoc.txt").ToList();
+                //    List<string> PhieuMuon = File.ReadAllLines("PhieuMuon.txt").ToList();
                     int ma = int.Parse(maBDToRemove);
                     if (IsBDExist(ma))
                     {
-                        for (int i = 0; i < books.Count; i++)
-                        {
-                            string[] parts = books[i].Split(';');
 
-                            if (parts[0].Equals(maBDToRemove))
-                            {
-                                books.RemoveAt(i);
-                                Console.WriteLine("              Xóa bạn đọc thành công.");
-                                Console.ReadKey();
-                                Console.Clear();
-                                break;
-                            }
+                        if (IsBorrowingBooks(maBDToRemove))
+                        {
+                            Console.WriteLine("              Không thể xóa bạn đọc đang mượn sách.");
+                            Console.ReadKey();
+                            Console.Clear();
+                            break;
+                        } else
+                        for (int i = 0; i < banDoc.Count; i++)
+                        {
+                            string[] parts = banDoc[i].Split(';');
+                                                       
+                                if (parts[0].Equals(maBDToRemove))
+                                {
+                                    banDoc.RemoveAt(i);
+                                    Console.WriteLine("              Xóa bạn đọc thành công.");
+                                    Console.ReadKey();
+                                    Console.Clear();
+                                    break;
+                                }
+                        
                         }
                         // Ghi đè thông tin sách vào file Sach.txt
-                        File.WriteAllLines("BanDoc.txt", books);
+                        File.WriteAllLines("BanDoc.txt", banDoc);
                         return;
                     }
                     else
@@ -151,6 +162,27 @@ namespace QuanLyThuVien
             } while (kiemTra == false);
 
         }
+
+        static bool IsBorrowingBooks(string maBanDoc)
+        {
+            bool kt=false;
+            // Đọc danh sách phiếu mượn từ file PhieuMuon.txt
+            List<string> PhieuMuon = File.ReadAllLines("PhieuMuon.txt").ToList();
+
+            for (int i = 0; i < PhieuMuon.Count; i++)
+            {
+                string[] parts = PhieuMuon[i].Split(';');
+                if (parts[1].Equals(maBanDoc) && parts[5].Equals("1"))
+                {
+                   kt = true;
+                    break;
+                }
+                             
+            }
+            return kt;
+
+        }
+
         public void UpdateBD()
         {
             Console.Write("              Nhập mã bạn đọc cần cập nhật: ");
@@ -185,13 +217,13 @@ namespace QuanLyThuVien
                     Console.Write("              Ngày đăng ký: ");
 
                     string ngaydkInPut = Console.ReadLine();
-                    DateTime ngayDK = DateTime.Parse("01/01/0001");
+                    DateTime ngayDK = DateTime.ParseExact(parts[2], "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None);
                     do
                     {
                         if (ngaydkInPut == "")
                         {
                             ngayDK = DateTime.ParseExact(parts[2], "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None);
-                            break;
+                            kiemTra = true;
                         }
                         else
                         {
